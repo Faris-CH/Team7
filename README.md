@@ -1,2 +1,2 @@
 # Team7
-Authors: Ali, Faris, Shishir
+Authors: Ali, Faris, Shishir, Zayd
