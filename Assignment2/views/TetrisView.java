@@ -1,6 +1,7 @@
-package views;
+package Assignment2.views;
 
-import model.TetrisModel;
+//import model.TetrisModel;
+import Assignment2.model.TetrisModel;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -15,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -65,7 +67,7 @@ public class TetrisView {
      */
     private void initUI() {
         this.paused = false;
-        this.stage.setTitle("CSC207 Tetris");
+        this.stage.setTitle("TETRIS UNLOCKED");
         this.width = this.model.getWidth()*pieceWidth + 2;
         this.height = this.model.getHeight()*pieceWidth + 2;
 
@@ -73,7 +75,10 @@ public class TetrisView {
         borderPane.setStyle("-fx-background-color: #121212;");
 
         //add canvas
-        canvas = new Canvas(this.width, this.height);
+        canvas = new Canvas();
+        canvas.setHeight(this.height);
+        canvas.setWidth(this.width);
+
         canvas.setId("Canvas");
         gc = canvas.getGraphicsContext2D();
 
@@ -82,7 +87,9 @@ public class TetrisView {
         scoreLabel.setId("ScoreLabel");
 
         gameModeLabel.setText("Player is: Human");
-        gameModeLabel.setMinWidth(250);
+        gameModeLabel.setAlignment(Pos.TOP_CENTER);
+        gameModeLabel.setMinWidth(150);
+        gameModeLabel.setMaxHeight(250);
         gameModeLabel.setFont(new Font(20));
         gameModeLabel.setStyle("-fx-text-fill: #e8e6e3");
 
@@ -95,6 +102,7 @@ public class TetrisView {
         pilotButtonHuman.setFont(new Font(16));
         pilotButtonHuman.setStyle("-fx-text-fill: #e8e6e3");
 
+
         RadioButton pilotButtonComputer = new RadioButton("Computer (Default)");
         pilotButtonComputer.setToggleGroup(toggleGroup);
         pilotButtonComputer.setUserData(Color.SALMON);
@@ -102,43 +110,60 @@ public class TetrisView {
         pilotButtonComputer.setStyle("-fx-text-fill: #e8e6e3");
 
         scoreLabel.setText("Score is: 0");
+        scoreLabel.setAlignment(Pos.TOP_CENTER);
+        scoreLabel.setMinWidth(150);
+        scoreLabel.setMaxHeight(250);
         scoreLabel.setFont(new Font(20));
         scoreLabel.setStyle("-fx-text-fill: #e8e6e3");
 
         //add buttons
         startButton = new Button("Start");
         startButton.setId("Start");
-        startButton.setPrefSize(150, 50);
+        startButton.resize(200,300);
+
         startButton.setFont(new Font(12));
         startButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
         stopButton = new Button("Stop");
         stopButton.setId("Start");
-        stopButton.setPrefSize(150, 50);
+
         stopButton.setFont(new Font(12));
         stopButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
         saveButton = new Button("Save");
         saveButton.setId("Save");
-        saveButton.setPrefSize(150, 50);
+
         saveButton.setFont(new Font(12));
         saveButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
         loadButton = new Button("Load");
         loadButton.setId("Load");
-        loadButton.setPrefSize(150, 50);
+
         loadButton.setFont(new Font(12));
         loadButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
         newButton = new Button("New Game");
         newButton.setId("New");
-        newButton.setPrefSize(150, 50);
+        
         newButton.setFont(new Font(12));
         newButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
         HBox controls = new HBox(20, saveButton, loadButton, newButton, startButton, stopButton);
         controls.setPadding(new Insets(20, 20, 20, 20));
         controls.setAlignment(Pos.CENTER);
+
+        stopButton.setPrefSize(200, 70);
+        startButton.setPrefWidth(200);
+        saveButton.setPrefWidth(200);
+        loadButton.setPrefWidth(200);
+        newButton.setPrefWidth(200);
+        stopButton.setMaxWidth(300);
+        saveButton.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
+        stopButton.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
+        loadButton.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
+        newButton.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
+        startButton.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
+
 
         Slider slider = new Slider(0, 100, 50);
         slider.setShowTickLabels(true);
@@ -193,6 +218,7 @@ public class TetrisView {
         loadButton.setOnAction(e -> {
             createLoadView();
             borderPane.requestFocus();
+
         });
 
         //configure this such that you adjust the speed of the timeline to a value that
@@ -236,10 +262,13 @@ public class TetrisView {
         borderPane.setRight(scoreBox);
         borderPane.setCenter(canvas);
         borderPane.setBottom(vBox);
+        BorderPane.setAlignment(canvas, Pos.CENTER);
+        BorderPane.setAlignment(controls, Pos.TOP_CENTER);
 
-        var scene = new Scene(borderPane, 800, 800);
+        var scene = new Scene(borderPane);
         this.stage.setScene(scene);
         this.stage.show();
+
     }
 
     /**
@@ -253,6 +282,7 @@ public class TetrisView {
         if (strVal.equals("Computer (Default)")){
             this.model.setAutoPilotMode();
             gameModeLabel.setText("Player is: Computer (Default)");
+
         } else if (strVal.equals("Human")) {
             this.model.setHumanPilotMode();
             gameModeLabel.setText("Player is: Human");
@@ -336,8 +366,7 @@ public class TetrisView {
     /**
      * Create the view to save a board to a file
      */
-    private void createSaveView(){
-        SaveView saveView = new SaveView(this);
+    private void createSaveView(){ SaveView saveView = new SaveView(this);
     }
 
     /**
