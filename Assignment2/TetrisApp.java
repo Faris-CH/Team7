@@ -34,8 +34,6 @@ public class TetrisApp extends Application {
     public void start(Stage primaryStage) {
         this.model = new TetrisModel(primaryStage); // create a model
 
-        this.model = new TetrisModel(); // create a model
-
         this.view = new TetrisView(model, primaryStage); //tie the model to the view
         this.model.startGame(); //begin
     }

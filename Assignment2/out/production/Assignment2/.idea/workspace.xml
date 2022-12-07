@@ -2,82 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4dea2a55-0677-4f7e-93ee-afd05458c9cc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/TetrisModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/TetrisModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/TetrisPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/TetrisPiece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/model/TetrisModel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/model/TetrisModel$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/model/TetrisModel$MoveType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/model/TetrisModel$MoveType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/model/TetrisModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/model/TetrisModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/model/TetrisPiece.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/model/TetrisPiece.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/views/TetrisView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/views/TetrisView$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/views/TetrisView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/views/TetrisView.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assignment2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TetrisApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/TetrisApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/GameOverView.java" beforeDir="false" afterPath="$PROJECT_DIR$/views/GameOverView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/TetrisView.java" beforeDir="false" afterPath="$PROJECT_DIR$/views/TetrisView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/Assignment1.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/Assignment1/boggle/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/BoggleTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/boggle/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/boggle/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/boggle/.idea/boggle.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/boggle/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/boggle/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/boggle/BoggleGame.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/boggle/BoggleGameTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/boggle/BoggleGrid.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/boggle/BoggleStats.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/boggle/BoggleStatsTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/boggle/Dictionary.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/boggle/DictionaryTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/boggle/Position.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/boggle/boggle.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment1/wordlist.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/Assignment_One.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/Assignment1.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/Assignment1/boggle/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/BoggleTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/boggle/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/boggle/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/boggle/.idea/boggle.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/boggle/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/boggle/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/boggle/BoggleGame.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/boggle/BoggleGameTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/boggle/BoggleGrid.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/boggle/BoggleStats$Player.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/boggle/BoggleStats.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/boggle/BoggleStatsTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/boggle/Dictionary.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/boggle/DictionaryTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/boggle/Position.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/boggle/boggle.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_One/out/production/Assignment_One/wordlist.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lab05/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab05/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lab06/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab06/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lab06/guidelines/Forester.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab06/guidelines/Forester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lab06/guidelines/Guidelines.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab06/guidelines/Guidelines.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/naqvizay/Assignment_One/Assignment_One.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/naqvizay/BoggleTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/naqvizay/BoggleTests.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/naqvizay/boggle/BoggleGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/naqvizay/boggle/BoggleGame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/naqvizay/boggle/BoggleGrid.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/naqvizay/boggle/BoggleGrid.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/naqvizay/boggle/BoggleStats.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/naqvizay/boggle/BoggleStats.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/naqvizay/boggle/BoggleStatsTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/naqvizay/boggle/BoggleStatsTests.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/naqvizay/boggle/Dictionary.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/naqvizay/boggle/Dictionary.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/naqvizay/boggle/Position.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/naqvizay/boggle/Position.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PauseMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TetrisView.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -91,20 +35,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/zaydg/CSC207/naqvizay/Assignment2&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/zaydg/CSC207/naqvizay/Phase2/Team7/Assignment2",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Application.TetrisApp">
     <configuration name="TetrisApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="TetrisApp" />
@@ -178,8 +124,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1666627617793</updated>
+      <workItem from="1670452478009" duration="1010000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

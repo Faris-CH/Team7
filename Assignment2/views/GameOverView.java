@@ -28,9 +28,6 @@ public class GameOverView {
 
         Button controlsButton, visualSettingsButton;
 
-        Label title = new Label("");
-        Label end_score = new Label("");
-
 
         BorderPane borderPane;
         Canvas canvas;
@@ -219,7 +216,7 @@ public class GameOverView {
         Label temp3 = new Label("");
         HBox bot = new HBox(20, resumeButton);
         VBox controls = new VBox(25, bot, title, temp, temp2, template, temp3, protanopiaButton, deuteranopiaButton, tritanopiaButton, defaultButton);
-
+        controls.setAlignment(Pos.TOP_CENTER);
         controlsButton = new Button("Controls");
         controlsButton.setId("Controls");
         controlsButton.setPrefSize(180, 60);
@@ -232,12 +229,6 @@ public class GameOverView {
         visualSettingsButton.setFont(new Font(15));
         visualSettingsButton.setStyle("-fx-background-color: #0000FF; -fx-text-fill: white;");
 
-        // Align the display using inbuilt javaFX layouts
-        Label temp = new Label("");
-        HBox bot = new HBox(20, resumeButton);
-        VBox controls = new VBox(25, bot, title, temp, controlsButton, visualSettingsButton);
-        controls.setPadding(new Insets(50, 20, 20, 20));
-        controls.setAlignment(Pos.TOP_CENTER);
 
         //Button to go back to pause menu
         resumeButton.setOnAction(e -> {
