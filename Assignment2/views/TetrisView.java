@@ -1,5 +1,6 @@
 package views;
 
+import javafx.event.ActionEvent;
 import model.TetrisModel;
 
 import javafx.animation.KeyFrame;
@@ -33,6 +34,7 @@ public class TetrisView {
     Stage stage;
 
     Button startButton, stopButton, loadButton, saveButton, newButton; //buttons for functions
+    ColorPicker colorButton;
     Label scoreLabel = new Label("");
     Label gameModeLabel = new Label("");
 
@@ -136,7 +138,9 @@ public class TetrisView {
         newButton.setFont(new Font(12));
         newButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
-        HBox controls = new HBox(20, saveButton, loadButton, newButton, startButton, stopButton);
+        colorButton = new ColorPicker();
+
+        HBox controls = new HBox(20, saveButton, loadButton, newButton, startButton, stopButton, colorButton);
         controls.setPadding(new Insets(20, 20, 20, 20));
         controls.setAlignment(Pos.CENTER);
 
@@ -193,6 +197,16 @@ public class TetrisView {
         loadButton.setOnAction(e -> {
             createLoadView();
             borderPane.requestFocus();
+        });
+
+        // configure such that the color chosen in the color picker is set as the background
+        // color of the stage
+        colorButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                String color = colorToHex(colorButton.getValue());
+                borderPane.setStyle("-fx-background-color: "+color+";");
+            }
         });
 
         //configure this such that you adjust the speed of the timeline to a value that
@@ -345,6 +359,31 @@ public class TetrisView {
      */
     private void createLoadView(){
         LoadView loadView = new LoadView(this);
+    }
+
+    /**
+     * Helper function to convert color Object to Hex code (in string)
+     * @param color
+     * @return String
+     */
+    private String colorToHex(Color color) {
+        return "#" + hexFormat(color.getRed())+hexFormat(color.getGreen())+hexFormat(color.getBlue());
+    }
+
+    /**
+     * Helper function to transform 0,255 int of the color's red/green/blue portion to hexadecimal
+     * format/
+     * @param colorPortion
+     * @return String
+     */
+    private String hexFormat(double colorPortion) {
+        String rgbPart = Integer.toHexString((int) Math.round(colorPortion * 255));
+        if (rgbPart.length() == 1) {
+            return "0" + rgbPart;
+        } else {
+            return rgbPart;
+        }
+
     }
 
 
