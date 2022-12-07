@@ -21,6 +21,15 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
+import java.io.File;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
+
 
 /**
  * Tetris View
@@ -32,7 +41,8 @@ public class TetrisView {
     TetrisModel model; //reference to model
     Stage stage;
 
-    Button startButton, stopButton, loadButton, saveButton, newButton; //buttons for functions
+    Button startButton, stopButton, loadButton, saveButton, newButton, soundButton; //buttons for functions
+    Clip currentlyPlaying; // audio clip object to play background music
     Label scoreLabel = new Label("");
     Label gameModeLabel = new Label("");
 
@@ -136,7 +146,14 @@ public class TetrisView {
         newButton.setFont(new Font(12));
         newButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
-        HBox controls = new HBox(20, saveButton, loadButton, newButton, startButton, stopButton);
+        // 2.1 - Initializing info for background music player
+        soundButton = new Button("Soundtrack");
+        soundButton.setId("Select Sound");
+        soundButton.setPrefSize(150, 50);
+        soundButton.setFont(new Font(12));
+        soundButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
+
+        HBox controls = new HBox(20, saveButton, loadButton, newButton, startButton, stopButton, soundButton);
         controls.setPadding(new Insets(20, 20, 20, 20));
         controls.setAlignment(Pos.CENTER);
 
@@ -192,6 +209,38 @@ public class TetrisView {
         //Make sure to return the focus to the borderPane once you're done!
         loadButton.setOnAction(e -> {
             createLoadView();
+            borderPane.requestFocus();
+        });
+
+        //configure this such that the background music begins to play when the soundButton is pressed.
+        // Pressing an additional time pauses music and another press resumes.
+        // Such a functionality takes care of user story 1.2 (as pausing/sound off is achieved) as well
+        //Make sure to return the focus to the borderPane once you're done!
+        soundButton.setOnAction(e -> {
+            if (currentlyPlaying == null) {
+                try {
+                    selectSoundtrackView();
+                } catch (UnsupportedAudioFileException a) {
+                    System.out.println("Unsupported file");
+                    a.printStackTrace();
+                } catch (IOException i) {
+                    System.out.println("File not Found");
+                    i.printStackTrace();
+                } catch (LineUnavailableException l) {
+                    System.out.println("line unavailable");
+                    l.printStackTrace();
+                }
+                soundButton.setText("Playing");
+            } else {
+                if (currentlyPlaying.isActive()) {
+                    currentlyPlaying.stop();
+                    soundButton.setText("Paused");
+                } else {
+                    currentlyPlaying.start();
+                    soundButton.setText("Playing");
+                }
+            }
+
             borderPane.requestFocus();
         });
 
@@ -347,5 +396,25 @@ public class TetrisView {
         LoadView loadView = new LoadView(this);
     }
 
+
+    /**
+     * Helper function to initialize currentlyPlaying to the clip object associated to
+     * the background music.
+     *
+     * @throws UnsupportedAudioFileException
+     * @throws IOException
+     * @throws LineUnavailableException
+     */
+    private void selectSoundtrackView() throws UnsupportedAudioFileException, IOException,
+            LineUnavailableException {
+
+        String path = System.getProperty("user.dir") + "\\Assignment2\\music\\bgMusic.wav";
+
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                new File(path).getAbsoluteFile());
+        currentlyPlaying = AudioSystem.getClip();
+        currentlyPlaying.open(audioInputStream);
+        currentlyPlaying.loop(Clip.LOOP_CONTINUOUSLY);
+    }
 
 }
