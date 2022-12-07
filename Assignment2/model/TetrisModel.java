@@ -2,6 +2,8 @@ package model;
 
 import java.io.*;
 import java.util.Random;
+import javafx.stage.*;
+import views.*;
 
 /** Represents a Tetris Model for Tetris.  
  * Based on the Tetris assignment in the Nifty Assignments Database, authored by Nick Parlante
@@ -11,6 +13,7 @@ public class TetrisModel implements Serializable {
     public static final int WIDTH = 10; //size of the board in blocks
     public static final int HEIGHT = 20; //height of the board in blocks
     public static final int BUFFERZONE = 4; //space at the top
+
 
     protected TetrisBoard board;  // Board data structure
     protected TetrisPiece[] pieces; // Pieces to be places on the board
@@ -27,11 +30,14 @@ public class TetrisModel implements Serializable {
     protected Random random;	 // the random generator for new pieces
 
     private boolean autoPilotMode; //are we in autopilot mode?
+
+    protected GameOverView gameOver; // true if we have lost
+
+    private Stage stage;
     protected TetrisPilot pilot;
 
     public enum MoveType {
-        ROTRIGHT,
-        ROTLEFT,
+        ROTATE,
         LEFT,
         RIGHT,
         DROP,
@@ -41,7 +47,8 @@ public class TetrisModel implements Serializable {
     /**
      * Constructor for a tetris model
      */
-    public TetrisModel() {
+    public TetrisModel(Stage primary_stage) {
+        this.stage = primary_stage;
         board = new TetrisBoard(WIDTH, HEIGHT + BUFFERZONE);
         pieces = TetrisPiece.getPieces(); //initialize board and pieces
         autoPilotMode = false;
@@ -88,14 +95,8 @@ public class TetrisModel implements Serializable {
 
             case RIGHT: newX++; break; //move right
 
-            case ROTRIGHT: //rotate right
+            case ROTATE: //rotate
                 newPiece = newPiece.fastRotation();
-                newX = newX + (currentPiece.getWidth() - newPiece.getWidth())/2;
-                newY = newY + (currentPiece.getHeight() - newPiece.getHeight())/2;
-                break;
-
-            case ROTLEFT: //rotate left
-                newPiece = newPiece.fastAntiRotation();
                 newX = newX + (currentPiece.getWidth() - newPiece.getWidth())/2;
                 newY = newY + (currentPiece.getHeight() - newPiece.getHeight())/2;
                 break;
@@ -138,6 +139,8 @@ public class TetrisModel implements Serializable {
 
         if (result > TetrisBoard.ADD_ROW_FILLED) {
             stopGame(); //oops, we lost.
+             GameOverView gameOver = new GameOverView(this.stage, score);
+             gameOver.start();
         }
 
     }
@@ -180,6 +183,9 @@ public class TetrisModel implements Serializable {
      */
     public void stopGame() {
         gameOn = false;
+    }
+    public void unpauseGame(){
+        gameOn = true;
     }
 
     /**
@@ -300,6 +306,8 @@ public class TetrisModel implements Serializable {
             // if the board is too tall, we've lost!
             if (board.getMaxHeight() > board.getHeight() - BUFFERZONE) {
                 stopGame();
+                GameOverView gameOver = new GameOverView(this.stage, score);
+                gameOver.start();
             }
 
             // Otherwise, add a new piece and keep playing
