@@ -1,6 +1,8 @@
 package views;
 
 
+import javafx.event.ActionEvent;
+
 import ColourBlindMode.*;
 
 import ColourBlindMode.Protanopia;
@@ -48,14 +50,16 @@ public class TetrisView {
     TetrisModel model; //reference to model
     Stage stage;
 
+
+    Button startButton, stopButton, saveButton, newButton; //buttons for functions
+    ColorPicker colorButton;
     Button menustartButton, instructionsButton, settingsButton, soundButton, loadButton;
 
 
     Button backButton, protanopiaButton, deuteranopiaButton, tritanopiaButton, defaultButton;
 
-
-    Button startButton, stopButton, loadButton, saveButton, newButton, soundButton; //buttons for functions
     Clip currentlyPlaying; // audio clip object to play background music
+
 
     Label scoreLabel = new Label("");
     Label gameModeLabel = new Label("");
@@ -538,6 +542,10 @@ public class TetrisView {
         newButton.setFont(new Font(12));
         newButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
+        colorButton = new ColorPicker();
+
+        HBox controls = new HBox(20, saveButton, loadButton, newButton, startButton, stopButton, colorButton, soundButton);
+
         // 2.1 - Initializing info for background music player
         soundButton = new Button("Soundtrack");
         soundButton.setId("Select Sound");
@@ -545,7 +553,7 @@ public class TetrisView {
         soundButton.setFont(new Font(12));
         soundButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
-        HBox controls = new HBox(20, saveButton, loadButton, newButton, startButton, stopButton, soundButton);
+
         controls.setPadding(new Insets(20, 20, 20, 20));
         controls.setAlignment(Pos.CENTER);
 
@@ -620,6 +628,14 @@ public class TetrisView {
             borderPane.requestFocus();
         });
 
+        // configure such that the color chosen in the color picker is set as the background
+        // color of the stage
+        colorButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                String color = colorToHex(colorButton.getValue());
+                borderPane.setStyle("-fx-background-color: "+color+";");
+            }
         //configure this such that the background music begins to play when the soundButton is pressed.
         // Pressing an additional time pauses music and another press resumes.
         // Such a functionality takes care of user story 1.2 (as pausing/sound off is achieved) as well
@@ -886,6 +902,31 @@ public class TetrisView {
     }
     private void createPauseMenu(){
         PauseMenu pauseMenu = new PauseMenu(this, this.model, this.stage);
+    }
+
+    /**
+     * Helper function to convert color Object to Hex code (in string)
+     * @param color
+     * @return String
+     */
+    private String colorToHex(Color color) {
+        return "#" + hexFormat(color.getRed())+hexFormat(color.getGreen())+hexFormat(color.getBlue());
+    }
+
+    /**
+     * Helper function to transform 0,255 int of the color's red/green/blue portion to hexadecimal
+     * format/
+     * @param colorPortion
+     * @return String
+     */
+    private String hexFormat(double colorPortion) {
+        String rgbPart = Integer.toHexString((int) Math.round(colorPortion * 255));
+        if (rgbPart.length() == 1) {
+            return "0" + rgbPart;
+        } else {
+            return rgbPart;
+        }
+
     }
 
 
