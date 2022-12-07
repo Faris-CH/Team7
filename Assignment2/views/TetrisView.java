@@ -59,6 +59,8 @@ public class TetrisView {
     public TetrisView(TetrisModel model, Stage stage) {
         this.model = model;
         this.stage = stage;
+        this.stage.setMinHeight(700);
+        this.stage.setMinWidth(600);
         initUI();
     }
 
