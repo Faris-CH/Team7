@@ -1,8 +1,12 @@
 package views;
 
+
+import ColourBlindMode.*;
+
 import ColourBlindMode.Protanopia;
 import ColourBlindMode.Deuteranopia;
 import ColourBlindMode.Tritanopia;
+
 import java.io.*;
 import java.util.*;
 import javafx.event.*;
@@ -23,6 +27,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 
+
 import java.io.IOException;
 import java.io.File;
 import javax.sound.sampled.LineUnavailableException;
@@ -30,7 +35,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-
 
 
 
@@ -46,7 +50,8 @@ public class TetrisView {
 
     Button menustartButton, instructionsButton, settingsButton, soundButton, loadButton;
 
-    Button backButton
+
+    Button backButton, protanopiaButton, deuteranopiaButton, tritanopiaButton, defaultButton;
 
 
     Button startButton, stopButton, loadButton, saveButton, newButton, soundButton; //buttons for functions
@@ -57,6 +62,8 @@ public class TetrisView {
     Label template = new Label("");
 
     Label title = new Label("");
+
+    Label mode_type = new Label("");
 
     BorderPane borderPane;
     Canvas canvas;
@@ -81,14 +88,62 @@ public class TetrisView {
     public TetrisView(TetrisModel model, Stage stage) {
         this.model = model;
         this.stage = stage;
+        
+        createfile();
+        try {
+            File myObj = new File("views","Settings.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String next = myReader.nextLine();
+                if (next == null){
+                    this.mode = "default";
+                    this.mode_type.setText("Mode: default");
+
+                }
+                else{
+                    this.mode = next;
+                    this.mode_type.setText("Mode: " + next);
+                }
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        menuUi();
+    }
+
+    public void createfile() { //Creates the colourblind settings file
+        try {
+            File setting = new File("views","Settings.txt");
+            this.settings = setting;
+            if (setting.createNewFile()){
+                System.out.println("File created: " + setting.getName());
+            }
+        }
+        catch (IOException e){
+            System.out.println("Error Occurred");
+        }
+
+    }
         menuUi();
     }
 
 
-//    public File getSettings(){
-//        return this.settings;
-//    }
 
+
+    public void writetoSettings(String new_mode){
+        try{
+            FileWriter mywrite = new FileWriter("views/Settings.txt");
+            mywrite.write(new_mode);
+            mywrite.close();
+            this.mode = new_mode;
+
+        }
+        catch (IOException e){
+            System.out.println("An error occurred");
+        }
+    }
 
     /**
      * Initialize interface
@@ -221,6 +276,11 @@ public class TetrisView {
 
 
         //add buttons
+        template.setText("Colourblind Templates");
+        template.setId("templates");
+        template.setFont(new Font(30));
+        template.setStyle("-fx-text-fill: #e8e6e3");
+        template.setAlignment(Pos.TOP_CENTER);
 
 
         backButton = new Button("Back");
@@ -229,13 +289,39 @@ public class TetrisView {
         backButton.setFont(new Font(15));
         backButton.setStyle("-fx-background-color: #0000FF; -fx-text-fill: white;");
 
+        protanopiaButton = new Button("Protanopia");
+        protanopiaButton.setId("Protanopia");
+        protanopiaButton.setPrefSize(180, 60);
+        protanopiaButton.setFont(new Font(15));
+        protanopiaButton.setStyle("-fx-background-color: #0000FF; -fx-text-fill: white;");
+
+        deuteranopiaButton = new Button("Deuteranopia");
+        deuteranopiaButton.setId("Deuteranopia");
+        deuteranopiaButton.setPrefSize(180, 60);
+        deuteranopiaButton.setFont(new Font(15));
+        deuteranopiaButton.setStyle("-fx-background-color: #0000FF; -fx-text-fill: white;");
+
+        tritanopiaButton = new Button("Tritanopia");
+        tritanopiaButton.setId("Tritanopia");
+        tritanopiaButton.setPrefSize(180, 60);
+        tritanopiaButton.setFont(new Font(15));
+        tritanopiaButton.setStyle("-fx-background-color: #0000FF; -fx-text-fill: white;");
+
+        defaultButton = new Button("Default");
+        defaultButton.setId("default");
+        defaultButton.setPrefSize(180, 60);
+        defaultButton.setFont(new Font(15));
+        defaultButton.setStyle("-fx-background-color: #0000FF; -fx-text-fill: white;");
+
 
         // Align the display using inbuilt javaFX layouts
         Label temp = new Label("");
         Label temp2 = new Label("");
         Label temp3 = new Label("");
         HBox bot = new HBox(20, backButton);
-        VBox controls = new VBox(25, bot, title, temp);
+
+        VBox controls = new VBox(25, bot, title, temp, temp2, template, temp3, protanopiaButton, deuteranopiaButton, tritanopiaButton, defaultButton);
+
         controls.setPadding(new Insets(50, 20, 20, 20));
         controls.setAlignment(Pos.TOP_CENTER);
 
@@ -246,6 +332,57 @@ public class TetrisView {
             borderPane.requestFocus();
         });
 
+        //Button to configure protanopia template
+        protanopiaButton.setOnAction(e -> {
+            PrintWriter reset = null;
+            try {
+                reset = new PrintWriter("Settings.txt");
+                reset.close();
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            this.writetoSettings("protanopia");
+            borderPane.requestFocus();
+        });
+
+        //Button to configure deuteranopia template
+        deuteranopiaButton.setOnAction(e -> {
+            PrintWriter reset = null;
+            try {
+                reset = new PrintWriter("Settings.txt");
+                reset.close();
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            this.writetoSettings("deuteranopia");
+            borderPane.requestFocus();
+        });
+
+        //Button to configure tritanopia template
+        tritanopiaButton.setOnAction(e -> {
+            PrintWriter reset = null;
+            try {
+                reset = new PrintWriter("Settings.txt");
+                reset.close();
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            this.writetoSettings("tritanopia");
+            borderPane.requestFocus();
+        });
+
+        // Button when pressed goes back to default colour template.
+        defaultButton.setOnAction(e -> {
+            PrintWriter reset = null;
+            try {
+                reset = new PrintWriter("Settings.txt");
+                reset.close();
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            this.writetoSettings("default");
+            borderPane.requestFocus();
+        });
 
         // Set up the borderpane
         borderPane.setTop(controls);
@@ -320,9 +457,16 @@ public class TetrisView {
         this.stage.show();
     }
 
+
+
+    public void start(){
+        initUI();
+    }//Getter to grab the game initialization UI.
+
     public void start(){
         initUI();
     }
+
     private void initUI() {
         this.paused = false;
         this.stage.setTitle("Tetris Unlocked");
@@ -413,7 +557,22 @@ public class TetrisView {
         vBox.setPadding(new Insets(20, 20, 20, 20));
         vBox.setAlignment(Pos.TOP_CENTER);
 
-        VBox scoreBox = new VBox(20, scoreLabel, gameModeLabel, pilotButtonHuman, pilotButtonComputer);
+
+        title.setText("Tetris Unlocked");
+        title.setId("type");
+        title.setFont(new Font(55));
+        title.setStyle("-fx-text-fill: #e8e6e3");
+        title.setAlignment(Pos.TOP_CENTER);
+
+        mode_type.setId("type");
+        mode_type.setFont(new Font(40));
+        mode_type.setStyle("-fx-text-fill: #e8e6e3");
+        mode_type.setAlignment(Pos.TOP_CENTER);
+        Label temp = new Label("");
+        Label temp2 = new Label("");
+        HBox top = new HBox(20, temp, temp2, title);
+        VBox scoreBox = new VBox(20, scoreLabel, mode_type, gameModeLabel, pilotButtonHuman, pilotButtonComputer);
+
         scoreBox.setPadding(new Insets(20, 20, 20, 20));
         vBox.setAlignment(Pos.TOP_CENTER);
 
@@ -423,6 +582,7 @@ public class TetrisView {
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.25), e -> updateBoard()));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+
 
         //configure this such that you start a new game when the user hits the newButton
         //Make sure to return the focus to the borderPane once you're done!
@@ -538,6 +698,8 @@ public class TetrisView {
         borderPane.setRight(scoreBox);
         borderPane.setCenter(canvas);
         borderPane.setBottom(vBox);
+        borderPane.setTop(top);
+
 
         var scene = new Scene(borderPane, 800, 800);
         this.stage.setScene(scene);
@@ -604,6 +766,41 @@ public class TetrisView {
     public void paintBoard() {
 
         // Draw a rectangle around the whole screen
+        if (this.mode.equalsIgnoreCase("protanopia")){
+            Mode template = new Protanopia();
+            Mode name = new NameDecorator(template);
+            mode_type.setText("Mode: " + name.getName());
+            template.draw(Color.GREEN.toString());
+            Color new_colour = Color.web(template.getNew_hex());
+            gc.setStroke(new_colour);
+            gc.setFill(new_colour);
+
+        } else if (this.mode.equalsIgnoreCase("deuteranopia")) {
+            Mode template = new Deuteranopia();
+            Mode name = new NameDecorator(template);
+            mode_type.setText("Mode: " + name.getName());
+            template.draw(Color.GREEN.toString());
+            Color new_colour = Color.web(template.getNew_hex());
+            gc.setStroke(new_colour);
+            gc.setFill(new_colour);
+
+        } else if (this.mode.equalsIgnoreCase("tritanopia")) {
+            Mode template = new Tritanopia();
+            Mode name = new NameDecorator(template);
+            mode_type.setText("Mode: " + name.getName());
+
+            template.draw(Color.GREEN.toString());
+            Color new_colour = Color.web(template.getNew_hex());
+            gc.setStroke(new_colour);
+            gc.setFill(new_colour);
+
+        }
+        else{
+            mode_type.setText("Mode: Default");
+            gc.setStroke(Color.GREEN);
+            gc.setFill(Color.GREEN);
+        }
+
 
             gc.setStroke(Color.GREEN);
             gc.setFill(Color.GREEN);
@@ -627,6 +824,42 @@ public class TetrisView {
             final int yHeight = this.model.getBoard().getColumnHeight(x);
             for (y=0; y<yHeight; y++) {
                 if (this.model.getBoard().getGrid(x, y)) {
+                    if (this.mode.equalsIgnoreCase("protanopia")) {
+                        Mode template = new Protanopia();
+                        template.draw(Color.RED.toString());
+                        Color new_colour1 = Color.web(template.getNew_hex());
+                        gc.setFill(new_colour1);
+                        gc.fillRect(left+1, yPixel(y)+1, dx, dy);
+                        template.draw(Color.GREEN.toString());
+                        Color new_colour2 = Color.web(template.getNew_hex());
+                        gc.setFill(new_colour2);
+
+
+                    } else if (this.mode.equalsIgnoreCase("deuteranopia")) {
+                        Mode template = new Deuteranopia();
+                        template.draw(Color.RED.toString());
+                        Color new_colour1 = Color.web(template.getNew_hex());
+                        gc.setFill(new_colour1);
+                        gc.fillRect(left+1, yPixel(y)+1, dx, dy);
+
+                        template.draw(Color.GREEN.toString());
+                        Color new_colour2 = Color.web(template.getNew_hex());
+                        gc.setFill(new_colour2);
+
+                    } else if (this.mode.equalsIgnoreCase("tritanopia")) {
+                        Mode template = new Tritanopia();
+                        template.draw(Color.RED.toString());
+                        Color new_colour1 = Color.web(template.getNew_hex());
+                        gc.setFill(new_colour1);
+                        gc.fillRect(left+1, yPixel(y)+1, dx, dy);
+
+                        template.draw(Color.GREEN.toString());
+                        Color new_colour2 = Color.web(template.getNew_hex());
+                        gc.setFill(new_colour2);
+
+                    }
+                    else{
+
                         gc.setFill(Color.RED);
                         gc.fillRect(left+1, yPixel(y)+1, dx, dy);
                         gc.setFill(Color.GREEN);
@@ -634,6 +867,8 @@ public class TetrisView {
                 }
             }
         }
+
+    }
 
 
     /**
@@ -652,6 +887,7 @@ public class TetrisView {
     private void createPauseMenu(){
         PauseMenu pauseMenu = new PauseMenu(this, this.model, this.stage);
     }
+
 
 
     /**
