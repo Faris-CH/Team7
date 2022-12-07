@@ -23,6 +23,15 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 
+import java.io.IOException;
+import java.io.File;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
+
 
 
 /**
@@ -39,6 +48,9 @@ public class TetrisView {
 
     Button backButton
 
+
+    Button startButton, stopButton, loadButton, saveButton, newButton, soundButton; //buttons for functions
+    Clip currentlyPlaying; // audio clip object to play background music
 
     Label scoreLabel = new Label("");
     Label gameModeLabel = new Label("");
@@ -351,6 +363,47 @@ public class TetrisView {
         scoreLabel.setFont(new Font(20));
         scoreLabel.setStyle("-fx-text-fill: #e8e6e3");
 
+        //add buttons
+        startButton = new Button("Start");
+        startButton.setId("Start");
+        startButton.setPrefSize(150, 50);
+        startButton.setFont(new Font(12));
+        startButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
+
+        stopButton = new Button("Stop");
+        stopButton.setId("Start");
+        stopButton.setPrefSize(150, 50);
+        stopButton.setFont(new Font(12));
+        stopButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
+
+        saveButton = new Button("Save");
+        saveButton.setId("Save");
+        saveButton.setPrefSize(150, 50);
+        saveButton.setFont(new Font(12));
+        saveButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
+
+        loadButton = new Button("Load");
+        loadButton.setId("Load");
+        loadButton.setPrefSize(150, 50);
+        loadButton.setFont(new Font(12));
+        loadButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
+
+        newButton = new Button("New Game");
+        newButton.setId("New");
+        newButton.setPrefSize(150, 50);
+        newButton.setFont(new Font(12));
+        newButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
+
+        // 2.1 - Initializing info for background music player
+        soundButton = new Button("Soundtrack");
+        soundButton.setId("Select Sound");
+        soundButton.setPrefSize(150, 50);
+        soundButton.setFont(new Font(12));
+        soundButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
+
+        HBox controls = new HBox(20, saveButton, loadButton, newButton, startButton, stopButton, soundButton);
+        controls.setPadding(new Insets(20, 20, 20, 20));
+        controls.setAlignment(Pos.CENTER);
 
         Slider slider = new Slider(0, 100, 50);
         slider.setShowTickLabels(true);
@@ -370,6 +423,74 @@ public class TetrisView {
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.25), e -> updateBoard()));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+
+        //configure this such that you start a new game when the user hits the newButton
+        //Make sure to return the focus to the borderPane once you're done!
+        newButton.setOnAction(e -> {
+
+            model.newGame();
+            borderPane.requestFocus();
+        });
+
+        //configure this such that you restart the game when the user hits the startButton
+        //Make sure to return the focus to the borderPane once you're done!
+        startButton.setOnAction(e -> {
+            paused = false;
+            borderPane.requestFocus();
+        });
+
+        //configure this such that you pause the game when the user hits the stopButton
+        //Make sure to return the focus to the borderPane once you're done!
+        stopButton.setOnAction(e -> {
+            paused = true;
+            borderPane.requestFocus();
+        });
+
+        //configure this such that the save view pops up when the saveButton is pressed.
+        //Make sure to return the focus to the borderPane once you're done!
+        saveButton.setOnAction(e -> {
+            createSaveView();
+            borderPane.requestFocus();
+        });
+
+        //configure this such that the load view pops up when the loadButton is pressed.
+        //Make sure to return the focus to the borderPane once you're done!
+        loadButton.setOnAction(e -> {
+            createLoadView();
+            borderPane.requestFocus();
+        });
+
+        //configure this such that the background music begins to play when the soundButton is pressed.
+        // Pressing an additional time pauses music and another press resumes.
+        // Such a functionality takes care of user story 1.2 (as pausing/sound off is achieved) as well
+        //Make sure to return the focus to the borderPane once you're done!
+        soundButton.setOnAction(e -> {
+            if (currentlyPlaying == null) {
+                try {
+                    selectSoundtrackView();
+                } catch (UnsupportedAudioFileException a) {
+                    System.out.println("Unsupported file");
+                    a.printStackTrace();
+                } catch (IOException i) {
+                    System.out.println("File not Found");
+                    i.printStackTrace();
+                } catch (LineUnavailableException l) {
+                    System.out.println("line unavailable");
+                    l.printStackTrace();
+                }
+                soundButton.setText("Playing");
+            } else {
+                if (currentlyPlaying.isActive()) {
+                    currentlyPlaying.stop();
+                    soundButton.setText("Paused");
+                } else {
+                    currentlyPlaying.start();
+                    soundButton.setText("Playing");
+                }
+            }
+
+            borderPane.requestFocus();
+        });
 
         //configure this such that you adjust the speed of the timeline to a value that
         //ranges between 0 and 3 times the default rate per model tick.  Make sure to return the
@@ -532,5 +653,25 @@ public class TetrisView {
         PauseMenu pauseMenu = new PauseMenu(this, this.model, this.stage);
     }
 
+
+    /**
+     * Helper function to initialize currentlyPlaying to the clip object associated to
+     * the background music.
+     *
+     * @throws UnsupportedAudioFileException
+     * @throws IOException
+     * @throws LineUnavailableException
+     */
+    private void selectSoundtrackView() throws UnsupportedAudioFileException, IOException,
+            LineUnavailableException {
+
+        String path = System.getProperty("user.dir") + "\\Assignment2\\music\\bgMusic.wav";
+
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                new File(path).getAbsoluteFile());
+        currentlyPlaying = AudioSystem.getClip();
+        currentlyPlaying.open(audioInputStream);
+        currentlyPlaying.loop(Clip.LOOP_CONTINUOUSLY);
+    }
 
 }
