@@ -19,11 +19,18 @@ public class GameOverView {
         Scene backup_scene;
 
         Button resumeButton, settingsButton, newGameButton, mainMenuButton; //buttons for functions
+
         Button protanopiaButton, deuteranopiaButton, tritanopiaButton, defaultButton;
 
         Label title = new Label("");
         Label end_score = new Label("");
         Label template = new Label("");
+
+        Button controlsButton, visualSettingsButton;
+
+        Label title = new Label("");
+        Label end_score = new Label("");
+
 
         BorderPane borderPane;
         Canvas canvas;
@@ -168,6 +175,7 @@ public class GameOverView {
         title.setStyle("-fx-text-fill: #e8e6e3");
         title.setAlignment(Pos.TOP_CENTER);
 
+
         template.setText("Colourblind Templates");
         template.setId("templates");
         template.setFont(new Font(30));
@@ -179,6 +187,7 @@ public class GameOverView {
         resumeButton.setPrefSize(180, 60);
         resumeButton.setFont(new Font(15));
         resumeButton.setStyle("-fx-background-color: #0000FF; -fx-text-fill: white;");
+
 
         protanopiaButton = new Button("Protanopia");
         protanopiaButton.setId("Protanopia");
@@ -210,6 +219,23 @@ public class GameOverView {
         Label temp3 = new Label("");
         HBox bot = new HBox(20, resumeButton);
         VBox controls = new VBox(25, bot, title, temp, temp2, template, temp3, protanopiaButton, deuteranopiaButton, tritanopiaButton, defaultButton);
+
+        controlsButton = new Button("Controls");
+        controlsButton.setId("Controls");
+        controlsButton.setPrefSize(180, 60);
+        controlsButton.setFont(new Font(15));
+        controlsButton.setStyle("-fx-background-color: #0000FF; -fx-text-fill: white;");
+
+        visualSettingsButton = new Button("Display");
+        visualSettingsButton.setId("Display");
+        visualSettingsButton.setPrefSize(180, 60);
+        visualSettingsButton.setFont(new Font(15));
+        visualSettingsButton.setStyle("-fx-background-color: #0000FF; -fx-text-fill: white;");
+
+        // Align the display using inbuilt javaFX layouts
+        Label temp = new Label("");
+        HBox bot = new HBox(20, resumeButton);
+        VBox controls = new VBox(25, bot, title, temp, controlsButton, visualSettingsButton);
         controls.setPadding(new Insets(50, 20, 20, 20));
         controls.setAlignment(Pos.TOP_CENTER);
 
@@ -218,6 +244,7 @@ public class GameOverView {
             gameoverUI();
             borderPane.requestFocus();
         });
+
 
         protanopiaButton.setOnAction(e -> {
             PrintWriter reset = null;

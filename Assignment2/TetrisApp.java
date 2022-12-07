@@ -1,4 +1,6 @@
+
 import javafx.scene.paint.*;
+
 import model.TetrisModel;
 import views.TetrisView;
 
@@ -31,6 +33,9 @@ public class TetrisApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.model = new TetrisModel(primaryStage); // create a model
+
+        this.model = new TetrisModel(); // create a model
+
         this.view = new TetrisView(model, primaryStage); //tie the model to the view
         this.model.startGame(); //begin
     }
