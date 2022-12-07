@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4dea2a55-0677-4f7e-93ee-afd05458c9cc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/views/ScoreView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/TetrisScores.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/ScoreView.java" beforeDir="false" afterPath="$PROJECT_DIR$/views/ScoreView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,13 +40,14 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "last_opened_file_path": "C:/Users/zaydg/CSC207/naqvizay/Phase2/Team7/Assignment2",
-    "project.structure.last.edited": "Libraries",
+    "project.structure.last.edited": "Global Libraries",
     "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
   <component name="RunManager" selected="Application.TetrisApp">
-    <configuration name="TetrisApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="TetrisApp" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="TetrisApp" />
       <module name="Assignment2" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-19\lib&quot; --add-modules javafx.controls,javafx.fxml" />
@@ -99,7 +103,6 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TetrisApp" />
         <item itemvalue="JUnit.TetrisTests" />
         <item itemvalue="JUnit.TetrisTests.testClearRows" />
         <item itemvalue="JUnit.TetrisTests.testPlacementHeight" />
