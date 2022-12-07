@@ -1,7 +1,4 @@
-package Assignment2.views;
-
-
-
+package views;
 import javafx.event.ActionEvent;
 
 import ColourBlindMode.*;
@@ -105,19 +102,18 @@ public class TetrisView {
         this.stage.setMinHeight(700);
         this.stage.setMinWidth(600);
         initUI();
-        
+
         createfile();
         try {
-            File myObj = new File("views","Settings.txt");
+            File myObj = new File("views", "Settings.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String next = myReader.nextLine();
-                if (next == null){
+                if (next == null) {
                     this.mode = "default";
                     this.mode_type.setText("Mode: default");
 
-                }
-                else{
+                } else {
                     this.mode = next;
                     this.mode_type.setText("Mode: " + next);
                 }
@@ -132,26 +128,24 @@ public class TetrisView {
 
     public void createfile() { //Creates the colourblind settings file
         try {
-            File setting = new File("views","Settings.txt");
+            File setting = new File("views", "Settings.txt");
             this.settings = setting;
-            if (setting.createNewFile()){
+            if (setting.createNewFile()) {
                 System.out.println("File created: " + setting.getName());
             }
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Error Occurred");
         }
     }
 
-    public void writetoSettings(String new_mode){
-        try{
+    public void writetoSettings(String new_mode) {
+        try {
             FileWriter mywrite = new FileWriter("views/Settings.txt");
             mywrite.write(new_mode);
             mywrite.close();
             this.mode = new_mode;
 
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.out.println("An error occurred");
         }
     }
@@ -261,7 +255,8 @@ public class TetrisView {
         HBox bot = new HBox(20, soundButton);
         controls.getChildren().add(bot);
 
-        controls.setBackground(Background.fill(new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE, new Stop(0, Color.AQUA), new Stop(0.5, Color.INDIANRED), new Stop(1, Color.LIMEGREEN))));
+        controls.setBackground(Background.fill(Color.SKYBLUE));
+//        controls.setBackground(Background.fill(new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE, new Stop(0, Color.AQUA), new Stop(0.5, Color.INDIANRED), new Stop(1, Color.LIMEGREEN))));
         var scene = new Scene(borderPane, 800, 800, Color.GREEN);
 //        scene.setFill(new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE, new Stop(0, Color.GREEN), new Stop(.5, Color.web("81c483"))));
         scene.setFill(Color.GREEN);
@@ -270,7 +265,7 @@ public class TetrisView {
     }
 
 
-//Class For The Settings UI
+    //Class For The Settings UI
     private void settingsUI() {
         this.paused = false;
         this.stage.setTitle("Tetris Unlocked");
@@ -406,8 +401,8 @@ public class TetrisView {
     }
 
 
-//UI Class For The Instructions Page
-    private void instructionsUI(){
+    //UI Class For The Instructions Page
+    private void instructionsUI() {
         this.paused = false;
         this.stage.setTitle("Tetris Unlocked");
         this.width = this.model.getWidth() * pieceWidth + 2;
@@ -435,12 +430,24 @@ public class TetrisView {
         title.setAlignment(Pos.TOP_CENTER);
 
         Label instructions = new Label(" " +
-                "The aim in Tetris is simple; you bring down blocks from the top of the screen. You can move the blocks around, either left to " +
-                "right and/or you can rotate them. The blocks fall at a certain rate, but you can make them fall faster " +
-                "if you’re sure of your positioning. Your objective is to get all the blocks to fill all the empty space in a " +
-                "line at the bottom of the screen; whenever you do this, you’ll find that the blocks vanish and you get awarded some points.");
+                "How to play TETRIS Unlocked:\n" +
+                "\n" +
+                "The way objective of TETRIS is easy, the goal is to bring the " +
+                "TETRIS blocks from the top of the screen to the bottom to create a single " +
+                "straight horizontal line." +
+                " On the way down the player can rotate the object clockwise and counter-clockwise," +
+                " using the keys 'E' and 'Q' all in rotations of 90 degrees. A player could also move " +
+                "the block left and right, using the keys 'A' and 'D', finally to move the block downwards" +
+                " a player could use the 'S' key to drop the block downwards at a faster rate.\n" +
+                "\n" +
+                "Controls: \n" +
+                "- Left - 'A'\n" +
+                "- Right - 'D'\n" +
+                "- Down - 'S'\n" +
+                "- Clockwise - 'E'\n" +
+                "- Counter-Clockwise - 'Q'");
         instructions.setId("instructions");
-        instructions.setFont(new Font(30));
+        instructions.setFont(new Font(24));
         instructions.setStyle("-fx-text-fill: #e8e6e3");
         instructions.setAlignment(Pos.CENTER);
         instructions.setWrapText(true);
@@ -469,8 +476,7 @@ public class TetrisView {
     }
 
 
-
-    public void start(){
+    public void start() {
         initUI();
     }//Getter to grab the game initialization UI.
 
@@ -478,8 +484,8 @@ public class TetrisView {
     private void initUI() {
         this.paused = false;
         this.stage.setTitle("TETRIS UNLOCKED");
-        this.width = this.model.getWidth()*pieceWidth + 2;
-        this.height = this.model.getHeight()*pieceWidth + 2;
+        this.width = this.model.getWidth() * pieceWidth + 2;
+        this.height = this.model.getHeight() * pieceWidth + 2;
 
         this.stage.setTitle("Tetris Unlocked");
 
@@ -532,7 +538,7 @@ public class TetrisView {
         //add buttons
         startButton = new Button("Start");
         startButton.setId("Start");
-        startButton.resize(200,300);
+        startButton.resize(200, 300);
 
         startButton.setFont(new Font(12));
         startButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
@@ -557,7 +563,7 @@ public class TetrisView {
 
         newButton = new Button("New Game");
         newButton.setId("New");
-        
+
         newButton.setFont(new Font(12));
         newButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
@@ -571,18 +577,6 @@ public class TetrisView {
         soundButton.setFont(new Font(12));
         soundButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
-
-        stopButton.setPrefSize(200, 70);
-        startButton.setPrefWidth(200);
-        saveButton.setPrefWidth(200);
-        loadButton.setPrefWidth(200);
-        newButton.setPrefWidth(200);
-        stopButton.setMaxWidth(300);
-        saveButton.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
-        stopButton.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
-        loadButton.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
-        newButton.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
-        startButton.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
 
 
         Slider slider = new Slider(0, 100, 50);
@@ -628,19 +622,6 @@ public class TetrisView {
             borderPane.requestFocus();
         });
 
-        //configure this such that you restart the game when the user hits the startButton
-        //Make sure to return the focus to the borderPane once you're done!
-        startButton.setOnAction(e -> {
-            paused = false;
-            borderPane.requestFocus();
-        });
-
-        //configure this such that you pause the game when the user hits the stopButton
-        //Make sure to return the focus to the borderPane once you're done!
-        stopButton.setOnAction(e -> {
-            paused = true;
-            borderPane.requestFocus();
-        });
 
         //configure this such that the save view pops up when the saveButton is pressed.
         //Make sure to return the focus to the borderPane once you're done!
@@ -664,59 +645,60 @@ public class TetrisView {
             public void handle(ActionEvent actionEvent) {
                 String color = colorToHex(colorButton.getValue());
                 borderPane.setStyle("-fx-background-color: " + color + ";");
-            }});
-            //configure this such that the background music begins to play when the soundButton is pressed.
-            // Pressing an additional time pauses music and another press resumes.
-            // Such a functionality takes care of user story 1.2 (as pausing/sound off is achieved) as well
-            //Make sure to return the focus to the borderPane once you're done!
-        soundButton.setOnAction(e ->{
-                if (currentlyPlaying == null) {
-                    try {
-                        selectSoundtrackView();
-                    } catch (UnsupportedAudioFileException a) {
-                        System.out.println("Unsupported file");
-                        a.printStackTrace();
-                    } catch (IOException i) {
-                        System.out.println("File not Found");
-                        i.printStackTrace();
-                    } catch (LineUnavailableException l) {
-                        System.out.println("line unavailable");
-                        l.printStackTrace();
-                    }
-                    soundButton.setText("Playing");
-                } else {
-                    if (currentlyPlaying.isActive()) {
-                        currentlyPlaying.stop();
-                        soundButton.setText("Paused");
-                    } else {
-                        currentlyPlaying.start();
-                        soundButton.setText("Playing");
-                    }
+            }
+        });
+        //configure this such that the background music begins to play when the soundButton is pressed.
+        // Pressing an additional time pauses music and another press resumes.
+        // Such a functionality takes care of user story 1.2 (as pausing/sound off is achieved) as well
+        //Make sure to return the focus to the borderPane once you're done!
+        soundButton.setOnAction(e -> {
+            if (currentlyPlaying == null) {
+                try {
+                    selectSoundtrackView();
+                } catch (UnsupportedAudioFileException a) {
+                    System.out.println("Unsupported file");
+                    a.printStackTrace();
+                } catch (IOException i) {
+                    System.out.println("File not Found");
+                    i.printStackTrace();
+                } catch (LineUnavailableException l) {
+                    System.out.println("line unavailable");
+                    l.printStackTrace();
                 }
+                soundButton.setText("Playing");
+            } else {
+                if (currentlyPlaying.isActive()) {
+                    currentlyPlaying.stop();
+                    soundButton.setText("Paused");
+                } else {
+                    currentlyPlaying.start();
+                    soundButton.setText("Playing");
+                }
+            }
 
-                borderPane.requestFocus();
-            });
+            borderPane.requestFocus();
+        });
 
-            //configure this such that you adjust the speed of the timeline to a value that
-            //ranges between 0 and 3 times the default rate per model tick.  Make sure to return the
-            //focus to the borderPane once you're done!
-        slider.setOnMouseReleased(e ->{
-                //TO DO
-                double value = slider.getValue() / 100;
-                timeline.setRate(value * 3);
-                this.borderPane.requestFocus();
+        //configure this such that you adjust the speed of the timeline to a value that
+        //ranges between 0 and 3 times the default rate per model tick.  Make sure to return the
+        //focus to the borderPane once you're done!
+        slider.setOnMouseReleased(e -> {
+            //TO DO
+            double value = slider.getValue() / 100;
+            timeline.setRate(value * 3);
+            this.borderPane.requestFocus();
 
-            });
+        });
 
-            //configure this such that you can use controls to rotate and place pieces as you like!!
-            //You'll want to respond to tie key presses to these moves:
-            // TetrisModel.MoveType.DROP, TetrisModel.MoveType.ROTATE, TetrisModel.MoveType.LEFT
-            //and TetrisModel.MoveType.RIGHT
-            //make sure that you don't let the human control the board
-            //if the autopilot is on, however.
-        borderPane.setOnKeyReleased(new EventHandler<KeyEvent>(){
-                @Override
-                public void handle (KeyEvent k){
+        //configure this such that you can use controls to rotate and place pieces as you like!!
+        //You'll want to respond to tie key presses to these moves:
+        // TetrisModel.MoveType.DROP, TetrisModel.MoveType.ROTATE, TetrisModel.MoveType.LEFT
+        //and TetrisModel.MoveType.RIGHT
+        //make sure that you don't let the human control the board
+        //if the autopilot is on, however.
+        borderPane.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent k) {
                 //TO DO
                 if (!model.getAutoPilotMode()) {
                     if (k.getCode() == KeyCode.A) {
@@ -738,14 +720,14 @@ public class TetrisView {
                     createPauseMenu();
                 }
             }
-            });
+        });
 
         borderPane.setRight(scoreBox);
         borderPane.setCenter(canvas);
         borderPane.setBottom(vBox);
 
         BorderPane.setAlignment(canvas, Pos.CENTER);
-        BorderPane.setAlignment(controls, Pos.TOP_CENTER);
+
 
         var scene = new Scene(borderPane);
         this.stage.setScene(scene);
@@ -758,43 +740,20 @@ public class TetrisView {
      *
      * @param value toggle selector on UI
      */
-    private void swapPilot(Toggle value) {
-        RadioButton chk = (RadioButton)value.getToggleGroup().getSelectedToggle();
-        String strVal = chk.getText();
-        if (strVal.equals("Computer (Default)")){
-            this.model.setAutoPilotMode();
-            gameModeLabel.setText("Player is: Computer (Default)");
-
-        } else if (strVal.equals("Human")) {
-            this.model.setHumanPilotMode();
-            gameModeLabel.setText("Player is: Human");
-        borderPane.setTop(top);
 
 
-            var scene = new Scene(borderPane, 800, 800);
-                this.stage.setScene(scene);
-                this.stage.show();
-        }
-
-
-
-                /**
-                 * Get user selection of "autopilot" or human player
-                 *
-                 * @param value toggle selector on UI
-                 */
-                private void swapPilot(Toggle value){
-            RadioButton chk = (RadioButton) value.getToggleGroup().getSelectedToggle();
-            String strVal = chk.getText();
-            if (strVal.equals("Computer (Default)")) {
-                this.model.setAutoPilotMode();
-                gameModeLabel.setText("Player is: Computer (Default)");
-            } else if (strVal.equals("Human")) {
-                this.model.setHumanPilotMode();
-                gameModeLabel.setText("Player is: Human");
-            }
-            borderPane.requestFocus(); //give the focus back to the pane with the blocks.
-        }
+    private void swapPilot(Toggle value){
+    RadioButton chk = (RadioButton) value.getToggleGroup().getSelectedToggle();
+    String strVal = chk.getText();
+    if (strVal.equals("Computer (Default)")) {
+        this.model.setAutoPilotMode();
+        gameModeLabel.setText("Player is: Computer (Default)");
+    } else if (strVal.equals("Human")) {
+        this.model.setHumanPilotMode();
+        gameModeLabel.setText("Player is: Human");
+    }
+    borderPane.requestFocus(); //give the focus back to the pane with the blocks.
+}
 
         /**
          * Update board (paint pieces and score info)
@@ -942,14 +901,11 @@ public class TetrisView {
     /**
      * Create the view to save a board to a file
      */
-    private void createSaveView(){ SaveView saveView = new SaveView(this);
+    void createSaveView(){ SaveView saveView = new SaveView(this);
     }
         /**
          * Create the view to save a board to a file
          */
-        public void createSaveView () {
-            SaveView saveView = new SaveView(this);
-        }
 
         /**
          * Create the view to select a board to load
