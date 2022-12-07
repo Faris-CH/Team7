@@ -1,7 +1,9 @@
-package Assignment2;//import model.TetrisModel;
-import Assignment2.model.TetrisModel;
-import Assignment2.views.TetrisView;
-//import Assignment2.model.TetrisModel
+
+
+import javafx.scene.paint.*;
+
+import model.TetrisModel;
+import views.TetrisView;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -69,7 +71,10 @@ public class TetrisApp extends Application {
             }
         }while (userChoice != 1);
 
+        this.model = new TetrisModel(primaryStage); // create a model
 
+        this.view = new TetrisView(model, primaryStage); //tie the model to the view
+        this.model.startGame(); //begin
 
     }
 
