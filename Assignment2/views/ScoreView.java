@@ -77,8 +77,8 @@ public class ScoreView {
     private TetrisScores getScores() throws IOException {
         FileInputStream file = null;
         ObjectInputStream in = null;
-
-        File boardfile = new File(".\\scores\\highscores.ser");
+        File boardfile = new File("scores/highscores.ser");
+//        File boardfile = new File(".\\scores\\highscores.ser");
         try {
             file = new FileInputStream(boardfile);
             in = new ObjectInputStream(file);

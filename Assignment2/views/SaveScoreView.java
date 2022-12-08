@@ -79,7 +79,7 @@ public class SaveScoreView {
      */
     public void saveScore() {
 
-        File file = new File(".\\scores\\highscores.ser");
+        File file = new File("scores/highscores.ser");
 
         String name = saveFileNameTextField.getText();
 

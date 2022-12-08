@@ -129,7 +129,11 @@ public class PauseMenu {
 
         newGameButton.setOnAction(e -> {
             this.stage.setScene(this.backup_scene);
-            this.model.newGame();
+            try {
+                this.model.newGame();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             borderPane.requestFocus();
         });
 
@@ -150,8 +154,16 @@ public class PauseMenu {
         });
         mainMenuButton.setOnAction(e -> {
             this.model = new TetrisModel(stage); // create a model
-            this.view = new TetrisView(model, this.stage); //tie the model to the view
-            this.model.startGame(); //begin
+            try {
+                this.view = new TetrisView(model, this.stage); //tie the model to the view
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            try {
+                this.model.startGame(); //begin
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             borderPane.requestFocus();
         });
 

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4dea2a55-0677-4f7e-93ee-afd05458c9cc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/TetrisView.java" beforeDir="false" afterPath="$PROJECT_DIR$/views/TetrisView.java" afterDir="false" />
-    </list>
+    <list default="true" id="4dea2a55-0677-4f7e-93ee-afd05458c9cc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -119,7 +116,7 @@
       <option name="presentableId" value="Default" />
       <updated>1666627617793</updated>
       <workItem from="1670452478009" duration="2588000" />
-      <workItem from="1670455807574" duration="521000" />
+      <workItem from="1670455807574" duration="1320000" />
     </task>
     <servers />
   </component>

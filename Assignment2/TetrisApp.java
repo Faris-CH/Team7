@@ -1,5 +1,6 @@
 
 
+import java.io.*;
 import javafx.scene.paint.*;
 
 import model.TetrisModel;
@@ -35,7 +36,7 @@ public class TetrisApp extends Application {
      * @param primaryStage stage upon which to load GUI elements
      */
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
 
         this.model = new TetrisModel(primaryStage); // create a model
         this.view = new TetrisView(model, primaryStage); //tie the model to the view

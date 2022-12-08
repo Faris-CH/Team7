@@ -71,7 +71,7 @@ public class TetrisView {
 
     TetrisScores scores;
     boolean saved = false;
-    
+
     Stage stage;
 
 
@@ -122,7 +122,7 @@ public class TetrisView {
 
         this.scores = new TetrisScores();
         this.scores.getScores();
-        
+
         this.stage.setMinHeight(700);
         this.stage.setMinWidth(600);
         initUI();
@@ -246,7 +246,11 @@ public class TetrisView {
         //configure this such that you start a new game when the user hits the newButton
         menustartButton.setOnAction(e -> {
             initUI();
-            this.model.newGame();
+            try {
+                this.model.newGame();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             borderPane.requestFocus();
         });
         //configure this such that the load view pops up when the loadButton is pressed.
@@ -278,7 +282,10 @@ public class TetrisView {
         borderPane.setTop(controls);
         borderPane.setCenter(canvas);
 
-        HBox bot = new HBox(20, soundButton);
+        Label empty = new Label("");
+        Label empty2 = new Label("");
+        Label empty3 = new Label("");
+        VBox bot = new VBox(20, empty, empty2, empty3);
         controls.getChildren().add(bot);
 
         controls.setBackground(Background.fill(Color.SKYBLUE));
@@ -624,7 +631,6 @@ public class TetrisView {
         vBox.setAlignment(Pos.TOP_CENTER);
 
 
-
         title.setText("Tetris Unlocked");
         title.setId("type");
         title.setFont(new Font(55));
@@ -638,7 +644,7 @@ public class TetrisView {
         Label temp = new Label("");
         Label temp2 = new Label("");
         HBox top = new HBox(20, temp, temp2, title);
-        VBox scoreBox = new VBox(20, scoreLabel, mode_type, gameModeLabel, pilotButtonHuman, pilotButtonComputer, temp, soundButton, colorButton);
+        VBox scoreBox = new VBox(20, scoreLabel, mode_type, gameModeLabel, pilotButtonHuman, pilotButtonComputer, temp, soundButton, colorButton, scoreButton);
 
         scoreBox.setPadding(new Insets(20, 20, 20, 20));
         vBox.setAlignment(Pos.TOP_CENTER);
@@ -662,9 +668,13 @@ public class TetrisView {
         //Make sure to return the focus to the borderPane once you're done!
         newButton.setOnAction(e -> {
 
-            model.newGame();
+            try {
+                model.newGame();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             saved = false;
-            
+
             borderPane.requestFocus();
         });
 
@@ -707,7 +717,7 @@ public class TetrisView {
             }
             borderPane.requestFocus();
         });
-        
+
         // configure such that the color chosen in the color picker is set as the background
         // color of the stage
         colorButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -753,7 +763,7 @@ public class TetrisView {
         //ranges between 0 and 3 times the default rate per model tick.  Make sure to return the
         //focus to the borderPane once you're done!
         slider.setOnMouseReleased(e -> {
-        
+
             timeline.setRate(slider.getValue() / 100 * 3);
             borderPane.requestFocus();
 
@@ -770,20 +780,40 @@ public class TetrisView {
             @Override
             public void handle(KeyEvent k) {
                 //TO DO
-                if (k.getCode().equals(KeyCode.E)){
-                    model.modelTick(TetrisModel.MoveType.ROTRIGHT);
-                } else if (k.getCode().equals(KeyCode.Q)){
-                    model.modelTick(TetrisModel.MoveType.ROTLEFT);
+                if (k.getCode().equals(KeyCode.E)) {
+                    try {
+                        model.modelTick(TetrisModel.MoveType.ROTRIGHT);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (k.getCode().equals(KeyCode.Q)) {
+                    try {
+                        model.modelTick(TetrisModel.MoveType.ROTLEFT);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
 
-                if (k.getCode().equals(KeyCode.A)){
-                    model.modelTick(TetrisModel.MoveType.LEFT);
-                } else if (k.getCode().equals(KeyCode.D)){
-                    model.modelTick(TetrisModel.MoveType.RIGHT);
+                if (k.getCode().equals(KeyCode.A)) {
+                    try {
+                        model.modelTick(TetrisModel.MoveType.LEFT);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (k.getCode().equals(KeyCode.D)) {
+                    try {
+                        model.modelTick(TetrisModel.MoveType.RIGHT);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
 
-                if (k.getCode().equals(KeyCode.S)){
-                    model.modelTick(TetrisModel.MoveType.DROP);
+                if (k.getCode().equals(KeyCode.S)) {
+                    try {
+                        model.modelTick(TetrisModel.MoveType.DROP);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 if (k.getCode() == KeyCode.ESCAPE) {
                     createPauseMenu();
@@ -812,232 +842,237 @@ public class TetrisView {
      */
 
 
-    private void swapPilot(Toggle value){
-    RadioButton chk = (RadioButton) value.getToggleGroup().getSelectedToggle();
-    String strVal = chk.getText();
-    if (strVal.equals("Computer (Default)")) {
-        this.model.setAutoPilotMode();
-        gameModeLabel.setText("Player is: Computer (Default)");
-    } else if (strVal.equals("Human")) {
-        this.model.setHumanPilotMode();
-        gameModeLabel.setText("Player is: Human");
+    private void swapPilot(Toggle value) {
+        RadioButton chk = (RadioButton) value.getToggleGroup().getSelectedToggle();
+        String strVal = chk.getText();
+        if (strVal.equals("Computer (Default)")) {
+            this.model.setAutoPilotMode();
+            gameModeLabel.setText("Player is: Computer (Default)");
+        } else if (strVal.equals("Human")) {
+            this.model.setHumanPilotMode();
+            gameModeLabel.setText("Player is: Human");
+        }
+        borderPane.requestFocus(); //give the focus back to the pane with the blocks.
     }
-    borderPane.requestFocus(); //give the focus back to the pane with the blocks.
-}
 
-        /**
-         * Update board (paint pieces and score info)
-         */
-        private void updateBoard () {
-            if (this.paused != true) {
-                paintBoard();
-                this.model.modelTick(TetrisModel.MoveType.DOWN);
-                updateScore();
-            }
+    /**
+     * Update board (paint pieces and score info)
+     */
+    private void updateBoard() throws IOException {
+        if (this.paused != true) {
+            paintBoard();
+            this.model.modelTick(TetrisModel.MoveType.DOWN);
+            updateScore();
+        }
+    }
+
+    /**
+     * Update score on UI
+     */
+    private void updateScore() {
+        if (this.paused != true) {
+            scoreLabel.setText("Score is: " + model.getScore() + "\nPieces placed:" + model.getCount());
+        }
+    }
+
+    /**
+     * Methods to calibrate sizes of pixels relative to board size
+     */
+    private final int yPixel(int y) {
+        return (int) Math.round(this.height - 1 - (y + 1) * dY());
+    }
+
+    private final int xPixel(int x) {
+        return (int) Math.round((x) * dX());
+    }
+
+    private final float dX() {
+        return (((float) (this.width - 2)) / this.model.getBoard().getWidth());
+    }
+
+    private final float dY() {
+        return (((float) (this.height - 2)) / this.model.getBoard().getHeight());
+    }
+
+    /**
+     * Draw the board
+     */
+    public void paintBoard() {
+
+        // Draw a rectangle around the whole screen
+        if (this.mode.equalsIgnoreCase("protanopia")) {
+            Mode template = new Protanopia();
+            Mode name = new NameDecorator(template);
+            mode_type.setText("Mode: " + name.getName());
+            template.draw(Color.GREEN.toString());
+            Color new_colour = Color.web(template.getNew_hex());
+            gc.setStroke(new_colour);
+            gc.setFill(new_colour);
+
+        } else if (this.mode.equalsIgnoreCase("deuteranopia")) {
+            Mode template = new Deuteranopia();
+            Mode name = new NameDecorator(template);
+            mode_type.setText("Mode: " + name.getName());
+            template.draw(Color.GREEN.toString());
+            Color new_colour = Color.web(template.getNew_hex());
+            gc.setStroke(new_colour);
+            gc.setFill(new_colour);
+
+        } else if (this.mode.equalsIgnoreCase("tritanopia")) {
+            Mode template = new Tritanopia();
+            Mode name = new NameDecorator(template);
+            mode_type.setText("Mode: " + name.getName());
+
+            template.draw(Color.GREEN.toString());
+            Color new_colour = Color.web(template.getNew_hex());
+            gc.setStroke(new_colour);
+            gc.setFill(new_colour);
+
+        } else {
+            mode_type.setText("Mode: Default");
+            gc.setStroke(Color.GREEN);
+            gc.setFill(Color.GREEN);
         }
 
-        /**
-         * Update score on UI
-         */
-        private void updateScore () {
-            if (this.paused != true) {
-                scoreLabel.setText("Score is: " + model.getScore() + "\nPieces placed:" + model.getCount());
-            }
-        }
+        gc.fillRect(0, 0, this.width - 1, this.height - 1);
 
-        /**
-         * Methods to calibrate sizes of pixels relative to board size
-         */
-        private final int yPixel ( int y){
-            return (int) Math.round(this.height - 1 - (y + 1) * dY());
-        }
-        private final int xPixel ( int x){
-            return (int) Math.round((x) * dX());
-        }
-        private final float dX () {
-            return (((float) (this.width - 2)) / this.model.getBoard().getWidth());
-        }
-        private final float dY () {
-            return (((float) (this.height - 2)) / this.model.getBoard().getHeight());
-        }
+        // Draw the line separating the top area on the screen
+        gc.setStroke(Color.BLACK);
+        int spacerY = yPixel(this.model.getBoard().getHeight() - this.model.BUFFERZONE - 1);
+        gc.strokeLine(0, spacerY, this.width - 1, spacerY);
 
-        /**
-         * Draw the board
-         */
-        public void paintBoard () {
+        // Factor a few things out to help the optimizer
+        final int dx = Math.round(dX() - 2);
+        final int dy = Math.round(dY() - 2);
+        final int bWidth = this.model.getBoard().getWidth();
 
-            // Draw a rectangle around the whole screen
-            if (this.mode.equalsIgnoreCase("protanopia")) {
-                Mode template = new Protanopia();
-                Mode name = new NameDecorator(template);
-                mode_type.setText("Mode: " + name.getName());
-                template.draw(Color.GREEN.toString());
-                Color new_colour = Color.web(template.getNew_hex());
-                gc.setStroke(new_colour);
-                gc.setFill(new_colour);
-
-            } else if (this.mode.equalsIgnoreCase("deuteranopia")) {
-                Mode template = new Deuteranopia();
-                Mode name = new NameDecorator(template);
-                mode_type.setText("Mode: " + name.getName());
-                template.draw(Color.GREEN.toString());
-                Color new_colour = Color.web(template.getNew_hex());
-                gc.setStroke(new_colour);
-                gc.setFill(new_colour);
-
-            } else if (this.mode.equalsIgnoreCase("tritanopia")) {
-                Mode template = new Tritanopia();
-                Mode name = new NameDecorator(template);
-                mode_type.setText("Mode: " + name.getName());
-
-                template.draw(Color.GREEN.toString());
-                Color new_colour = Color.web(template.getNew_hex());
-                gc.setStroke(new_colour);
-                gc.setFill(new_colour);
-
-            } else {
-                mode_type.setText("Mode: Default");
-                gc.setStroke(Color.GREEN);
-                gc.setFill(Color.GREEN);
-            }
-
-            gc.fillRect(0, 0, this.width - 1, this.height - 1);
-
-            // Draw the line separating the top area on the screen
-            gc.setStroke(Color.BLACK);
-            int spacerY = yPixel(this.model.getBoard().getHeight() - this.model.BUFFERZONE - 1);
-            gc.strokeLine(0, spacerY, this.width - 1, spacerY);
-
-            // Factor a few things out to help the optimizer
-            final int dx = Math.round(dX() - 2);
-            final int dy = Math.round(dY() - 2);
-            final int bWidth = this.model.getBoard().getWidth();
-
-            int x, y;
-            // Loop through and draw all the blocks; sizes of blocks are calibrated relative to screen size
-            for (x = 0; x < bWidth; x++) {
-                int left = xPixel(x);    // the left pixel
-                // draw from 0 up to the col height
-                final int yHeight = this.model.getBoard().getColumnHeight(x);
-                for (y = 0; y < yHeight; y++) {
-                    if (this.model.getBoard().getGrid(x, y)) {
-                        if (this.mode.equalsIgnoreCase("protanopia")) {
-                            Mode template = new Protanopia();
-                            template.draw(Color.RED.toString());
-                            Color new_colour1 = Color.web(template.getNew_hex());
-                            gc.setFill(new_colour1);
-                            gc.fillRect(left + 1, yPixel(y) + 1, dx, dy);
-                            template.draw(Color.GREEN.toString());
-                            Color new_colour2 = Color.web(template.getNew_hex());
-                            gc.setFill(new_colour2);
+        int x, y;
+        // Loop through and draw all the blocks; sizes of blocks are calibrated relative to screen size
+        for (x = 0; x < bWidth; x++) {
+            int left = xPixel(x);    // the left pixel
+            // draw from 0 up to the col height
+            final int yHeight = this.model.getBoard().getColumnHeight(x);
+            for (y = 0; y < yHeight; y++) {
+                if (this.model.getBoard().getGrid(x, y)) {
+                    if (this.mode.equalsIgnoreCase("protanopia")) {
+                        Mode template = new Protanopia();
+                        template.draw(Color.RED.toString());
+                        Color new_colour1 = Color.web(template.getNew_hex());
+                        gc.setFill(new_colour1);
+                        gc.fillRect(left + 1, yPixel(y) + 1, dx, dy);
+                        template.draw(Color.GREEN.toString());
+                        Color new_colour2 = Color.web(template.getNew_hex());
+                        gc.setFill(new_colour2);
 
 
-                        } else if (this.mode.equalsIgnoreCase("deuteranopia")) {
-                            Mode template = new Deuteranopia();
-                            template.draw(Color.RED.toString());
-                            Color new_colour1 = Color.web(template.getNew_hex());
-                            gc.setFill(new_colour1);
-                            gc.fillRect(left + 1, yPixel(y) + 1, dx, dy);
+                    } else if (this.mode.equalsIgnoreCase("deuteranopia")) {
+                        Mode template = new Deuteranopia();
+                        template.draw(Color.RED.toString());
+                        Color new_colour1 = Color.web(template.getNew_hex());
+                        gc.setFill(new_colour1);
+                        gc.fillRect(left + 1, yPixel(y) + 1, dx, dy);
 
-                            template.draw(Color.GREEN.toString());
-                            Color new_colour2 = Color.web(template.getNew_hex());
-                            gc.setFill(new_colour2);
+                        template.draw(Color.GREEN.toString());
+                        Color new_colour2 = Color.web(template.getNew_hex());
+                        gc.setFill(new_colour2);
 
-                        } else if (this.mode.equalsIgnoreCase("tritanopia")) {
-                            Mode template = new Tritanopia();
-                            template.draw(Color.RED.toString());
-                            Color new_colour1 = Color.web(template.getNew_hex());
-                            gc.setFill(new_colour1);
-                            gc.fillRect(left + 1, yPixel(y) + 1, dx, dy);
+                    } else if (this.mode.equalsIgnoreCase("tritanopia")) {
+                        Mode template = new Tritanopia();
+                        template.draw(Color.RED.toString());
+                        Color new_colour1 = Color.web(template.getNew_hex());
+                        gc.setFill(new_colour1);
+                        gc.fillRect(left + 1, yPixel(y) + 1, dx, dy);
 
-                            template.draw(Color.GREEN.toString());
-                            Color new_colour2 = Color.web(template.getNew_hex());
-                            gc.setFill(new_colour2);
+                        template.draw(Color.GREEN.toString());
+                        Color new_colour2 = Color.web(template.getNew_hex());
+                        gc.setFill(new_colour2);
 
-                        } else {
+                    } else {
 
-                            gc.setFill(Color.RED);
-                            gc.fillRect(left + 1, yPixel(y) + 1, dx, dy);
-                            gc.setFill(Color.GREEN);
-                        }
+                        gc.setFill(Color.RED);
+                        gc.fillRect(left + 1, yPixel(y) + 1, dx, dy);
+                        gc.setFill(Color.GREEN);
                     }
                 }
             }
-
         }
 
+    }
 
 
     /**
      * Create the view to save a board to a file
      */
-    void createSaveView(){ SaveView saveView = new SaveView(this);
+    void createSaveView() {
+        SaveView saveView = new SaveView(this);
     }
-        /**
-         * Create the view to save a board to a file
-         */
+    /**
+     * Create the view to save a board to a file
+     */
 
-        /**
-         * Create the view to select a board to load
-         */
-        public void createLoadView () {
-            LoadView loadView = new LoadView(this);
+    /**
+     * Create the view to select a board to load
+     */
+    public void createLoadView() {
+        LoadView loadView = new LoadView(this);
+    }
+
+    private void createPauseMenu() {
+        PauseMenu pauseMenu = new PauseMenu(this, this.model, this.stage);
+    }
+
+    /**
+     * Helper function to convert color Object to Hex code (in string)
+     *
+     * @param color
+     * @return String
+     */
+    private String colorToHex(Color color) {
+        return "#" + hexFormat(color.getRed()) + hexFormat(color.getGreen()) + hexFormat(color.getBlue());
+    }
+
+    /**
+     * Helper function to transform 0,255 int of the color's red/green/blue portion to hexadecimal
+     * format/
+     *
+     * @param colorPortion
+     * @return String
+     */
+    private String hexFormat(double colorPortion) {
+        String rgbPart = Integer.toHexString((int) Math.round(colorPortion * 255));
+        if (rgbPart.length() == 1) {
+            return "0" + rgbPart;
+        } else {
+            return rgbPart;
         }
-        private void createPauseMenu () {
-            PauseMenu pauseMenu = new PauseMenu(this, this.model, this.stage);
-        }
 
-        /**
-         * Helper function to convert color Object to Hex code (in string)
-         * @param color
-         * @return String
-         */
-        private String colorToHex (Color color){
-            return "#" + hexFormat(color.getRed()) + hexFormat(color.getGreen()) + hexFormat(color.getBlue());
-        }
-
-        /**
-         * Helper function to transform 0,255 int of the color's red/green/blue portion to hexadecimal
-         * format/
-         * @param colorPortion
-         * @return String
-         */
-        private String hexFormat ( double colorPortion){
-            String rgbPart = Integer.toHexString((int) Math.round(colorPortion * 255));
-            if (rgbPart.length() == 1) {
-                return "0" + rgbPart;
-            } else {
-                return rgbPart;
-            }
-
-        }
+    }
 
 
-        /**
-         * Helper function to initialize currentlyPlaying to the clip object associated to
-         * the background music.
-         *
-         * @throws UnsupportedAudioFileException
-         * @throws IOException
-         * @throws LineUnavailableException
-         */
-        private void selectSoundtrackView () throws UnsupportedAudioFileException, IOException,
-                LineUnavailableException {
+    /**
+     * Helper function to initialize currentlyPlaying to the clip object associated to
+     * the background music.
+     *
+     * @throws UnsupportedAudioFileException
+     * @throws IOException
+     * @throws LineUnavailableException
+     */
+    private void selectSoundtrackView() throws UnsupportedAudioFileException, IOException,
+            LineUnavailableException {
 
-            String path = System.getProperty("user.dir") + "\\Assignment2\\music\\bgMusic.wav";
+        String path = System.getProperty("user.dir") + "\\Assignment2\\music\\bgMusic.wav";
 
-            File music = new File("music/bgMusic.wav");
+        File music = new File("music/bgMusic.wav");
 
 //            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
 //                    new File(path).getAbsoluteFile());
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-                    music);
-            currentlyPlaying = AudioSystem.getClip();
-            currentlyPlaying.open(audioInputStream);
-            currentlyPlaying.loop(Clip.LOOP_CONTINUOUSLY);
-        }
-
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                music);
+        currentlyPlaying = AudioSystem.getClip();
+        currentlyPlaying.open(audioInputStream);
+        currentlyPlaying.loop(Clip.LOOP_CONTINUOUSLY);
     }
+
 
     private void createScoreView() throws IOException {
         ScoreView scoreView = new ScoreView(this);
@@ -1049,3 +1084,4 @@ public class TetrisView {
     private void createSaveScoreView() throws IOException {
         SaveScoreView saveScoreView = new SaveScoreView(this);
     }
+}

@@ -4,12 +4,26 @@
     <list default="true" id="4dea2a55-0677-4f7e-93ee-afd05458c9cc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TetrisApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/TetrisApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/TetrisModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/TetrisModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Assignment2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Assignment2/TetrisApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/TetrisApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/model/TetrisModel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/model/TetrisModel$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/model/TetrisModel$MoveType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/model/TetrisModel$MoveType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/model/TetrisModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/model/TetrisModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/views/GameOverView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/views/GameOverView$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/views/GameOverView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/views/GameOverView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/views/PauseMenu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/views/PauseMenu$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/views/PauseMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/views/PauseMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/views/SaveView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/views/SaveView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/views/ScoreView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/views/ScoreView.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Assignment2/views/Settings.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/views/Settings.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Assignment2/views/TetrisView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/views/TetrisView$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Assignment2/views/TetrisView$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/views/TetrisView$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Assignment2/views/TetrisView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/views/TetrisView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/GameOverView.java" beforeDir="false" afterPath="$PROJECT_DIR$/views/GameOverView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/PauseMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/views/PauseMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/SaveScoreView.java" beforeDir="false" afterPath="$PROJECT_DIR$/views/SaveScoreView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/ScoreView.java" beforeDir="false" afterPath="$PROJECT_DIR$/views/ScoreView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/Settings.txt" beforeDir="false" afterPath="$PROJECT_DIR$/views/Settings.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/TetrisView.java" beforeDir="false" afterPath="$PROJECT_DIR$/views/TetrisView.java" afterDir="false" />
     </list>

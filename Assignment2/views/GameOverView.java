@@ -20,7 +20,7 @@ public class GameOverView {
 
         Button resumeButton, settingsButton, newGameButton, mainMenuButton; //buttons for functions
 
-        Button protanopiaButton, deuteranopiaButton, tritanopiaButton, defaultButton;
+        Button protanopiaButton, deuteranopiaButton, tritanopiaButton, defaultButton, scoreButton;
 
         Label title = new Label("");
         Label end_score = new Label("");
@@ -47,7 +47,7 @@ public class GameOverView {
          *
          */
 
-    public GameOverView(Stage stage, int totalScore){
+    public GameOverView(Stage stage, int totalScore) throws IOException {
         this.backup_scene = stage.getScene();
         this.score = totalScore;
         this.model = new TetrisModel(stage);
@@ -106,16 +106,29 @@ public class GameOverView {
         mainMenuButton.setStyle("-fx-background-color: #0000FF; -fx-text-fill: white;");
 
 
+        scoreButton = new Button("Save Score");
+        scoreButton.setId("score");
+        scoreButton.setPrefSize(180, 60);
+        scoreButton.setFont(new Font(15));
+        scoreButton.setStyle("-fx-background-color: #0000FF; -fx-text-fill: white;");
+
+
+
+
         // Align the display using inbuilt VBox javaFX layout
         Label temp = new Label("");
-        VBox controls = new VBox(25, title, end_score, temp, newGameButton, settingsButton, mainMenuButton);
+        VBox controls = new VBox(25, title, end_score, temp, newGameButton, settingsButton, scoreButton, mainMenuButton);
         controls.setPadding(new Insets(50, 20, 20, 20));
         controls.setAlignment(Pos.TOP_CENTER);
 
         //Execute what the buttons should do when pressed
         newGameButton.setOnAction(e -> {
             this.view.start();
-            this.model.newGame();
+            try {
+                this.model.newGame();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             borderPane.requestFocus();
         });
         settingsButton.setOnAction(e -> {
@@ -125,8 +138,22 @@ public class GameOverView {
         });
         mainMenuButton.setOnAction(e -> {
             this.model = new TetrisModel(stage); // create a model
-            this.view = new TetrisView(model, this.stage); //tie the model to the view
-            this.model.startGame(); //begin
+            try {
+                this.view = new TetrisView(model, this.stage); //tie the model to the view
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            try {
+                this.model.startGame(); //begin
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            borderPane.requestFocus();
+        });
+
+        scoreButton.setOnAction(e -> {
+            SaveScoreView save = new SaveScoreView(this.view);
+            save.saveScore();
             borderPane.requestFocus();
         });
 
