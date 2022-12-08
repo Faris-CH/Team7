@@ -17,28 +17,21 @@ import java.util.Date;
 import java.util.function.Predicate;
 
 
-/** 
- * Save File View
- * 
- * Based on the Tetris assignment in the Nifty Assignments Database, authored by Nick Parlante
- */
-public class SaveView {
-
-    static String saveFileSuccess = "Saved board!!";
-    static String saveFileExistsError = "Error: File already exists";
-    static String saveFileNotSerError = "Error: File must end with .ser";
+public class SaveScoreView {
+    static String saveFileSuccess = "Saved score!!";
+    static String saveFileExistsError = "Error: Name already taken";
     private Label saveFileErrorLabel = new Label("");
     private Label saveBoardLabel = new Label(String.format("Enter name of file to save"));
-    private TextField saveFileNameTextField = new TextField("");
+    private TextField saveFileNameTextField = new TextField("highscores.ser");
     private Button saveBoardButton = new Button("Save board");
     TetrisView tetrisView;
 
-     /**
-         * Constructor
-         * 
-         * @param tetrisView master view
-         */
-    public SaveView(TetrisView tetrisView) {
+    /**
+     * Constructor
+     *
+     * @param tetrisView master view
+     */
+    public SaveScoreView(TetrisView tetrisView) {
         this.tetrisView = tetrisView;
 
         tetrisView.paused = true;
@@ -49,27 +42,25 @@ public class SaveView {
         dialogVbox.setPadding(new Insets(20, 20, 20, 20));
         dialogVbox.setStyle("-fx-background-color: #121212;");
 
-        saveBoardLabel.setId("SaveBoard"); // DO NOT MODIFY ID
+        saveBoardLabel.setId("SaveScore"); // DO NOT MODIFY ID
         saveFileErrorLabel.setId("SaveFileErrorLabel");
         saveFileNameTextField.setId("SaveFileNameTextField");
         saveBoardLabel.setStyle("-fx-text-fill: #e8e6e3;");
         saveBoardLabel.setFont(new Font(16));
         saveFileErrorLabel.setStyle("-fx-text-fill: #e8e6e3;");
         saveFileErrorLabel.setFont(new Font(16));
-        
         saveFileNameTextField.setStyle("-fx-text-fill: #000000;");
-        
         saveFileNameTextField.setFont(new Font(16));
 
-        String boardName = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()) + ".ser";
+        String boardName = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         saveFileNameTextField.setText(boardName);
 
-        saveBoardButton = new Button("Save board");
-        saveBoardButton.setId("SaveBoard"); // DO NOT MODIFY ID
+        saveBoardButton = new Button("Save Score");
+        saveBoardButton.setId("SaveScore"); // DO NOT MODIFY ID
         saveBoardButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
         saveBoardButton.setPrefSize(200, 50);
         saveBoardButton.setFont(new Font(16));
-        saveBoardButton.setOnAction(e -> saveBoard());
+        saveBoardButton.setOnAction(e -> saveScore());
 
         VBox saveBoardBox = new VBox(10, saveBoardLabel, saveFileNameTextField, saveBoardButton, saveFileErrorLabel);
 
@@ -84,21 +75,20 @@ public class SaveView {
     }
 
     /**
-     * Save the board to a file 
+     * Save the board to a file
      */
-    public void saveBoard() {
-        String dirPath = ".\\boards";
+    public void saveScore() {
 
-        File dir = new File(dirPath);
-        File[] directoryListing = dir.listFiles();
+        File file = new File(".\\scores\\highscores.ser");
 
-        if (!saveFileNameTextField.getText().toLowerCase().endsWith(".ser")){
-           saveFileErrorLabel.setText(saveFileNotSerError);
-        } else if (Arrays.stream(directoryListing).anyMatch(Predicate.isEqual(new File(dirPath + "\\" + saveFileNameTextField.getText())))){
+        String name = saveFileNameTextField.getText();
+
+        if (tetrisView.scores.getHighScores().containsValue(name)){
             saveFileErrorLabel.setText(saveFileExistsError);
         } else {
-            File file = new File(dirPath + "\\" + saveFileNameTextField.getText());
-            tetrisView.model.saveModel(file);
+            tetrisView.scores.addHighScore(saveFileNameTextField.getText(), tetrisView.model.getScore());
+
+            tetrisView.scores.saveScores(file);
             saveFileErrorLabel.setText(saveFileSuccess);
         }
     }

@@ -1,4 +1,5 @@
 package views;
+
 import javafx.event.ActionEvent;
 
 import ColourBlindMode.*;
@@ -14,10 +15,16 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.text.*;
 import javafx.stage.*;
+
 import model.TetrisModel;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.canvas.Canvas;
@@ -27,11 +34,18 @@ import javafx.scene.input.KeyEvent;
 
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+
+
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import model.TetrisScores;
 
 import javafx.util.Duration;
 
@@ -54,10 +68,14 @@ import javax.sound.sampled.Clip;
 public class TetrisView {
 
     TetrisModel model; //reference to model
+
+    TetrisScores scores;
+    boolean saved = false;
+    
     Stage stage;
 
 
-    Button startButton, stopButton, saveButton, newButton; //buttons for functions
+    Button startButton, stopButton, saveButton, newButton, scoreButton; //buttons for functions
     ColorPicker colorButton;
     Button menustartButton, instructionsButton, settingsButton, soundButton, loadButton;
 
@@ -83,10 +101,13 @@ public class TetrisView {
     Timeline timeline;
     File settings;
 
+
     int pieceWidth = 20; //width of block on display
     private double width; //height and width of canvas
     private double height;
+
     private String mode = "";
+
 
     /**
      * Constructor
@@ -95,10 +116,13 @@ public class TetrisView {
      * @param stage application stage
      */
 
-    public TetrisView(TetrisModel model, Stage stage) {
+    public TetrisView(TetrisModel model, Stage stage) throws IOException {
         this.model = model;
         this.stage = stage;
 
+        this.scores = new TetrisScores();
+        this.scores.getScores();
+        
         this.stage.setMinHeight(700);
         this.stage.setMinWidth(600);
         initUI();
@@ -148,11 +172,13 @@ public class TetrisView {
         } catch (IOException e) {
             System.out.println("An error occurred");
         }
+
     }
 
     /**
      * Initialize interface
      */
+
 
     //UI For The New Menu
     private void menuUi() {
@@ -271,6 +297,7 @@ public class TetrisView {
         this.stage.setTitle("Tetris Unlocked");
         this.width = this.model.getWidth() * pieceWidth + 2;
         this.height = this.model.getHeight() * pieceWidth + 2;
+
 
         borderPane = new BorderPane();
         borderPane.setStyle("-fx-background-color: #121212;");
@@ -501,14 +528,17 @@ public class TetrisView {
         canvas.setId("Canvas");
         gc = canvas.getGraphicsContext2D();
 
+
         //labels
         gameModeLabel.setId("GameModeLabel");
         scoreLabel.setId("ScoreLabel");
 
         gameModeLabel.setText("Player is: Human");
+
         gameModeLabel.setAlignment(Pos.TOP_CENTER);
         gameModeLabel.setMinWidth(150);
         gameModeLabel.setMaxHeight(250);
+
         gameModeLabel.setFont(new Font(20));
         gameModeLabel.setStyle("-fx-text-fill: #e8e6e3");
 
@@ -529,15 +559,18 @@ public class TetrisView {
         pilotButtonComputer.setStyle("-fx-text-fill: #e8e6e3");
 
         scoreLabel.setText("Score is: 0");
+
         scoreLabel.setAlignment(Pos.TOP_CENTER);
         scoreLabel.setMinWidth(150);
         scoreLabel.setMaxHeight(250);
+
         scoreLabel.setFont(new Font(20));
         scoreLabel.setStyle("-fx-text-fill: #e8e6e3");
 
         //add buttons
         startButton = new Button("Start");
         startButton.setId("Start");
+
         startButton.resize(200, 300);
 
         startButton.setFont(new Font(12));
@@ -569,6 +602,11 @@ public class TetrisView {
 
         colorButton = new ColorPicker();
 
+        scoreButton = new Button("High Scores");
+        scoreButton.setId("Scores");
+        scoreButton.setPrefSize(150, 50);
+        scoreButton.setFont(new Font(12));
+        scoreButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
         // 2.1 - Initializing info for background music player
         soundButton = new Button("Soundtrack");
@@ -577,8 +615,6 @@ public class TetrisView {
         soundButton.setFont(new Font(12));
         soundButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
-
-
         Slider slider = new Slider(0, 100, 50);
         slider.setShowTickLabels(true);
         slider.setStyle("-fx-control-inner-background: palegreen;");
@@ -586,6 +622,7 @@ public class TetrisView {
         VBox vBox = new VBox(20, slider);
         vBox.setPadding(new Insets(20, 20, 20, 20));
         vBox.setAlignment(Pos.TOP_CENTER);
+
 
 
         title.setText("Tetris Unlocked");
@@ -609,7 +646,14 @@ public class TetrisView {
         toggleGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> swapPilot(newVal));
 
         //timeline structures the animation, and speed between application "ticks"
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.25), e -> updateBoard()));
+
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.25), e -> {
+            try {
+                updateBoard();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
@@ -619,9 +663,24 @@ public class TetrisView {
         newButton.setOnAction(e -> {
 
             model.newGame();
+            saved = false;
+            
             borderPane.requestFocus();
         });
 
+        //configure this such that you restart the game when the user hits the startButton
+        //Make sure to return the focus to the borderPane once you're done!
+        startButton.setOnAction(e -> {
+            paused = false;
+            borderPane.requestFocus();
+        });
+
+        //configure this such that you pause the game when the user hits the stopButton
+        //Make sure to return the focus to the borderPane once you're done!
+        stopButton.setOnAction(e -> {
+            paused = true;
+            borderPane.requestFocus();
+        });
 
         //configure this such that the save view pops up when the saveButton is pressed.
         //Make sure to return the focus to the borderPane once you're done!
@@ -638,6 +697,17 @@ public class TetrisView {
 
         });
 
+        //configure this such that the load view pops up when the loadButton is pressed.
+        //Make sure to return the focus to the borderPane once you're done!
+        scoreButton.setOnAction(e -> {
+            try {
+                createScoreView();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            borderPane.requestFocus();
+        });
+        
         // configure such that the color chosen in the color picker is set as the background
         // color of the stage
         colorButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -683,10 +753,9 @@ public class TetrisView {
         //ranges between 0 and 3 times the default rate per model tick.  Make sure to return the
         //focus to the borderPane once you're done!
         slider.setOnMouseReleased(e -> {
-            //TO DO
-            double value = slider.getValue() / 100;
-            timeline.setRate(value * 3);
-            this.borderPane.requestFocus();
+        
+            timeline.setRate(slider.getValue() / 100 * 3);
+            borderPane.requestFocus();
 
         });
 
@@ -696,25 +765,25 @@ public class TetrisView {
         //and TetrisModel.MoveType.RIGHT
         //make sure that you don't let the human control the board
         //if the autopilot is on, however.
+
         borderPane.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent k) {
                 //TO DO
-                if (!model.getAutoPilotMode()) {
-                    if (k.getCode() == KeyCode.A) {
-                        model.modelTick(TetrisModel.MoveType.LEFT);
+                if (k.getCode().equals(KeyCode.E)){
+                    model.modelTick(TetrisModel.MoveType.ROTRIGHT);
+                } else if (k.getCode().equals(KeyCode.Q)){
+                    model.modelTick(TetrisModel.MoveType.ROTLEFT);
+                }
 
-                    }
-                    if (k.getCode() == KeyCode.S) {
-                        model.modelTick(TetrisModel.MoveType.DROP);
-                    }
-                    if (k.getCode() == KeyCode.D) {
-                        model.modelTick(TetrisModel.MoveType.RIGHT);
-                    }
-                    if (k.getCode() == KeyCode.W) {
-                        model.modelTick(TetrisModel.MoveType.ROTATE);
-                    }
+                if (k.getCode().equals(KeyCode.A)){
+                    model.modelTick(TetrisModel.MoveType.LEFT);
+                } else if (k.getCode().equals(KeyCode.D)){
+                    model.modelTick(TetrisModel.MoveType.RIGHT);
+                }
 
+                if (k.getCode().equals(KeyCode.S)){
+                    model.modelTick(TetrisModel.MoveType.DROP);
                 }
                 if (k.getCode() == KeyCode.ESCAPE) {
                     createPauseMenu();
@@ -725,6 +794,7 @@ public class TetrisView {
         borderPane.setRight(scoreBox);
         borderPane.setCenter(canvas);
         borderPane.setBottom(vBox);
+
 
         BorderPane.setAlignment(canvas, Pos.CENTER);
 
@@ -969,4 +1039,13 @@ public class TetrisView {
 
     }
 
+    private void createScoreView() throws IOException {
+        ScoreView scoreView = new ScoreView(this);
+    }
 
+    /**
+     * Create the view to save a score
+     */
+    private void createSaveScoreView() throws IOException {
+        SaveScoreView saveScoreView = new SaveScoreView(this);
+    }

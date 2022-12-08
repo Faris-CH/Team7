@@ -5,6 +5,7 @@ import java.util.Random;
 import javafx.stage.*;
 import views.*;
 
+
 /** Represents a Tetris Model for Tetris.  
  * Based on the Tetris assignment in the Nifty Assignments Database, authored by Nick Parlante
  */
@@ -37,7 +38,8 @@ public class TetrisModel implements Serializable {
     protected TetrisPilot pilot;
 
     public enum MoveType {
-        ROTATE,
+        ROTRIGHT,
+        ROTLEFT,
         LEFT,
         RIGHT,
         DROP,
@@ -47,6 +49,7 @@ public class TetrisModel implements Serializable {
     /**
      * Constructor for a tetris model
      */
+
     public TetrisModel(Stage primary_stage) {
         this.stage = primary_stage;
         board = new TetrisBoard(WIDTH, HEIGHT + BUFFERZONE);
@@ -95,8 +98,15 @@ public class TetrisModel implements Serializable {
 
             case RIGHT: newX++; break; //move right
 
-            case ROTATE: //rotate
+
+            case ROTRIGHT: //rotate right
                 newPiece = newPiece.fastRotation();
+                newX = newX + (currentPiece.getWidth() - newPiece.getWidth())/2;
+                newY = newY + (currentPiece.getHeight() - newPiece.getHeight())/2;
+                break;
+
+            case ROTLEFT: //rotate left
+                newPiece = newPiece.fastAntiRotation();
                 newX = newX + (currentPiece.getWidth() - newPiece.getWidth())/2;
                 newY = newY + (currentPiece.getHeight() - newPiece.getHeight())/2;
                 break;
@@ -139,8 +149,10 @@ public class TetrisModel implements Serializable {
 
         if (result > TetrisBoard.ADD_ROW_FILLED) {
             stopGame(); //oops, we lost.
+
              GameOverView gameOver = new GameOverView(this.stage, score);
              gameOver.start();
+
         }
 
     }
@@ -184,9 +196,11 @@ public class TetrisModel implements Serializable {
     public void stopGame() {
         gameOn = false;
     }
+
     public void unpauseGame(){
         gameOn = true;
     }
+
 
     /**
      * Get width
@@ -306,8 +320,10 @@ public class TetrisModel implements Serializable {
             // if the board is too tall, we've lost!
             if (board.getMaxHeight() > board.getHeight() - BUFFERZONE) {
                 stopGame();
+
                 GameOverView gameOver = new GameOverView(this.stage, score);
                 gameOver.start();
+
             }
 
             // Otherwise, add a new piece and keep playing
@@ -347,6 +363,11 @@ public class TetrisModel implements Serializable {
     public boolean getAutoPilotMode() {
         return this.autoPilotMode;
     }
+
+    public boolean isGameOn(){
+        return gameOn;
+    }
+
 }
 
 
