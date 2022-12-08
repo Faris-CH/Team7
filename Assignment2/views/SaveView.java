@@ -56,7 +56,9 @@ public class SaveView {
         saveBoardLabel.setFont(new Font(16));
         saveFileErrorLabel.setStyle("-fx-text-fill: #e8e6e3;");
         saveFileErrorLabel.setFont(new Font(16));
+        
         saveFileNameTextField.setStyle("-fx-text-fill: #000000;");
+        
         saveFileNameTextField.setFont(new Font(16));
 
         String boardName = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()) + ".ser";
